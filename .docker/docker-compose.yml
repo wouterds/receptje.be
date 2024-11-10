@@ -1,0 +1,96 @@
+services:
+  node:
+    image: ghcr.io/wouterds/eth.wouterds.be
+    mem_limit: 256mb
+    container_name: be.wouterds.eth--node
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.ethwouterdsbe.rule=Host(`eth.wouterds.be`)"
+      - "traefik.http.routers.ethwouterdsbe.entrypoints=websecure"
+      - "traefik.http.routers.ethwouterdsbe.tls=true"
+      - "traefik.http.routers.ethwouterdsbe-http.rule=Host(`eth.wouterds.be`)"
+      - "traefik.http.routers.ethwouterdsbe-http.entrypoints=web"
+      - "traefik.http.routers.ethwouterdsbe-http.middlewares=https-redirect"
+      - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
+      - "traefik.docker.network=proxy"
+    networks:
+      - eth-node
+      - proxy
+
+  geth:
+    image: ethereum/client-go
+    container_name: be.wouterds.eth--geth
+    mem_limit: 32gb
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy"
+      - "traefik.http.routers.ethwouterdsbe-ws.rule=Host(`eth.wouterds.be`) && PathPrefix(`/ws`)"
+      - "traefik.http.routers.ethwouterdsbe-ws.entrypoints=websecure"
+      - "traefik.http.routers.ethwouterdsbe-ws.tls=true"
+      - "traefik.http.services.ethwouterdsbe-ws.loadbalancer.server.port=8546"
+      - "traefik.http.services.ethwouterdsbe-ws.loadbalancer.server.scheme=http"
+      - "traefik.http.middlewares.ethwouterdsbe-ws-stripprefix.stripprefix.prefixes=/ws"
+      - "traefik.http.routers.ethwouterdsbe-ws.middlewares=ethwouterdsbe-ws-stripprefix@docker"
+    ports:
+      - "30303:30303/tcp"
+      - "30303:30303/udp"
+      - "8545:8545"
+      - "8546:8546"
+    volumes:
+      - /data/eth-node.geth:/root/.ethereum
+      - ./jwt.hex:/root/.ethereum/jwt.hex
+    command:
+      - --http
+      - --http.addr=0.0.0.0
+      - --http.vhosts=*
+      - --http.api=eth,net,web3,engine,admin
+      - --ws
+      - --ws.addr=0.0.0.0
+      - --ws.port=8546
+      - --ws.api=eth,net,web3
+      - --ws.origins=*
+      - --syncmode=snap
+      - --datadir=/root/.ethereum
+      - --authrpc.addr=0.0.0.0
+      - --authrpc.port=8551
+      - --authrpc.vhosts=*
+      - --authrpc.jwtsecret=/root/.ethereum/jwt.hex
+      - --discovery.dns=eth.wouterds.be
+      - --cache=4096
+      - --maxpeers=100
+    networks:
+      - eth-node
+      - proxy
+
+  lighthouse:
+    image: sigp/lighthouse
+    mem_limit: 32gb
+    container_name: be.wouterds.eth--lighthouse
+    restart: unless-stopped
+    ports:
+      - "9000:9000/tcp"
+      - "9000:9000/udp"
+    volumes:
+      - /data/eth-node.lighthouse:/root/.lighthouse
+      - ./jwt.hex:/root/.lighthouse/jwt.hex
+    command:
+      - lighthouse
+      - bn
+      - --network=mainnet
+      - --execution-endpoint=http://geth:8551
+      - --execution-jwt=/root/.lighthouse/jwt.hex
+      - --checkpoint-sync-url=https://beaconstate.info
+      - --http
+      - --http-address=0.0.0.0
+    depends_on:
+      - geth
+    networks:
+      - eth-node
+
+networks:
+  proxy:
+    external: true
+  eth-node:
+    name: eth-node
