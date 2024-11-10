@@ -3,7 +3,12 @@ import OpenAILib from 'openai';
 const openai = new OpenAILib({ apiKey: process.env.OPENAI_API_KEY });
 
 export class OpenAI {
-  static async searchRecipe(prompt: string): Promise<Recipe> {
+  static async searchRecipe(prompt: string): Promise<Recipe | null> {
+    if (prompt.length < 4) {
+      console.error('Prompt is too short');
+      return null;
+    }
+
     const completion = await openai.chat.completions.create({
       model: 'gpt-4o-mini',
       messages: [
@@ -34,10 +39,37 @@ export class OpenAI {
     });
 
     if (!completion.choices[0].message.content) {
-      throw new Error('No content returned from OpenAI');
+      console.error('No content returned from OpenAI');
+      return null;
     }
 
-    return JSON.parse(completion.choices[0].message.content as string) as Recipe;
+    const response = JSON.parse(completion.choices[0].message.content as string);
+
+    if (!this.isValidRecipe(response)) {
+      console.error('Invalid recipe format returned from OpenAI');
+      return null;
+    }
+
+    return response;
+  }
+
+  private static isValidRecipe(recipe: unknown): recipe is Recipe {
+    const r = recipe as Recipe;
+    return (
+      typeof r === 'object' &&
+      r !== null &&
+      typeof r.identifier === 'string' &&
+      typeof r.name === 'string' &&
+      typeof r.portions === 'number' &&
+      typeof r.preparationTime === 'number' &&
+      Array.isArray(r.ingredients) &&
+      r.ingredients.every(
+        (i) =>
+          typeof i.amount === 'string' && typeof i.unit === 'string' && typeof i.item === 'string',
+      ) &&
+      Array.isArray(r.steps) &&
+      r.steps.every((s) => typeof s === 'string')
+    );
   }
 }
 

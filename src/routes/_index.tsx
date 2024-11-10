@@ -1,6 +1,7 @@
 import type { ActionFunctionArgs, MetaFunction } from '@remix-run/node';
-import { Form, useActionData } from '@remix-run/react';
+import { Link, useFetcher } from '@remix-run/react';
 
+import { SearchRecipe } from '~/components/search-recipe';
 import { OpenAI } from '~/services/openai';
 
 export const meta: MetaFunction = () => {
@@ -12,62 +13,54 @@ export const meta: MetaFunction = () => {
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();
-  const prompt = formData.get('prompt') as string;
+  const q = formData.get('q') as string;
 
-  return { recipe: await OpenAI.searchRecipe(prompt) };
+  return { recipe: await OpenAI.searchRecipe(q), q };
 };
 
 export default function Index() {
-  const data = useActionData<typeof action>();
+  const fetcher = useFetcher<typeof action>();
+  const data = fetcher.data;
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="h-screen flex items-center justify-center">
-        <Form
-          method="post"
-          className="rounded-xl p-12 shadow-lg bg-white text-sm flex items-center gap-4 max-w-xl w-full">
-          <input
-            type="text"
-            name="prompt"
-            className="border rounded-full px-6 py-3 flex-1"
-            placeholder="Zoek een receptje"
-          />
-          <button
-            className="bg-rose-500 hover:bg-rose-600 transition-colors text-white font-semibold px-6 py-3 rounded-full inline-block"
-            type="submit">
-            Zoek
-          </button>
-        </Form>
-      </div>
+    <div className="flex flex-col w-full gap-6 sm:gap-8 py-6 sm:py-8">
+      <header className="px-6 sm:px-8 flex flex-col gap-4">
+        <Link to="/" className="flex-shrink-0">
+          <img src="/logo.svg" alt="Receptje.be" className="h-8" />
+        </Link>
+        <SearchRecipe fetcher={fetcher} />
+      </header>
+      <main className="px-6 sm:px-8 text-slate-800">
+        {data?.recipe && (
+          <div className="max-w-2xl">
+            <h1 className="text-xl font-semibold mb-1">{data.recipe.name}</h1>
 
-      {data?.recipe && (
-        <div className="max-w-2xl mx-auto -mt-32 mb-16">
-          <div className="rounded-xl p-12 shadow-lg bg-white space-y-6">
-            <h1 className="text-2xl font-bold text-gray-900">{data.recipe.name}</h1>
-
-            <div className="flex gap-4 text-sm text-gray-600">
+            <div className="flex gap-4 mb-3">
               <p>
-                👥 {data.recipe.portions} {data.recipe.portions === 1 ? 'portie' : 'porties'}
+                <span className="font-medium">{data.recipe.portions}</span>{' '}
+                {data.recipe.portions === 1 ? 'portie' : 'porties'}
               </p>
-              <p>⏱️ {data.recipe.preparationTime} minuten</p>
+              <p>
+                <span className="font-medium">{data.recipe.preparationTime}</span> minuten
+              </p>
             </div>
 
-            <div>
-              <h2 className="font-bold text-lg mb-3">Ingrediënten</h2>
+            <div className="mb-4">
+              <h2 className="font-semibold text-lg mb-2">Ingrediënten</h2>
               <ul className="space-y-2 list-disc list-inside">
                 {data.recipe.ingredients.map((ingredient, index) => (
                   <li key={index} className="marker:text-rose-500">
-                    <span className="text-gray-900 font-medium">
+                    <span className="font-medium">
                       {ingredient.amount} {ingredient.unit}
                     </span>{' '}
-                    <span className="text-gray-900">{ingredient.item}</span>
+                    <span>{ingredient.item}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
             <div>
-              <h2 className="font-bold text-lg mb-3">Bereiding</h2>
+              <h2 className="font-bold text-lg mb-2">Bereiding</h2>
               <ol className="space-y-3">
                 {data.recipe.steps.map((step, index) => (
                   <li key={index} className="flex gap-3">
@@ -78,8 +71,8 @@ export default function Index() {
               </ol>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </main>
     </div>
   );
 }
