@@ -1,0 +1,21 @@
+services:
+  node:
+    container_name: be.receptje--node
+    image: ghcr.io/wouterds/receptje.be
+    mem_limit: 128mb
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.receptjebe.rule=Host(`receptje.be`)"
+      - "traefik.http.routers.receptjebe.entrypoints=websecure"
+      - "traefik.http.routers.receptjebe.tls=true"
+      - "traefik.http.routers.receptjebe-http.rule=Host(`receptje.be`)"
+      - "traefik.http.routers.receptjebe-http.entrypoints=web"
+      - "traefik.http.routers.receptjebe-http.middlewares=https-redirect"
+      - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true
