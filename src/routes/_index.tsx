@@ -46,19 +46,21 @@ export default function Index() {
             <h1 className="text-2xl font-bold text-gray-900">{data.recipe.name}</h1>
 
             <div className="flex gap-4 text-sm text-gray-600">
-              <p>👥 {data.recipe.portions}</p>
+              <p>
+                👥 {data.recipe.portions} {data.recipe.portions === 1 ? 'portie' : 'porties'}
+              </p>
               <p>⏱️ {data.recipe.preparationTime} minuten</p>
             </div>
 
             <div>
               <h2 className="font-bold text-lg mb-3">Ingrediënten</h2>
-              <ul className="space-y-2">
+              <ul className="space-y-2 list-disc list-inside">
                 {data.recipe.ingredients.map((ingredient, index) => (
-                  <li key={index}>
-                    <span className="font-medium">
+                  <li key={index} className="marker:text-rose-500">
+                    <span className="text-gray-900 font-medium">
                       {ingredient.amount} {ingredient.unit}
                     </span>{' '}
-                    {ingredient.item}
+                    <span className="text-gray-900">{ingredient.item}</span>
                   </li>
                 ))}
               </ul>
