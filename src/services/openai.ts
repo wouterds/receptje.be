@@ -16,7 +16,7 @@ export class OpenAI {
           role: 'user',
           content: `Geef me een recept voor: ${prompt}. Geef alleen JSON terug (zonder backticks) in het volgende formaat:
           {
-            "identifier": "basic-english-recipe-slug",
+            "identifier": "simplified-dutch-recipe-slug",
             "name": "Naam van het gerecht",
             "portions": "Number of portions (number)",
             "preparationTime": "Preparation time in minutes (number)",
