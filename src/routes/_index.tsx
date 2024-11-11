@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import { SearchRecipe } from '~/components/search-recipe';
 import { useUser } from '~/hooks';
-import { OpenAI } from '~/services/openai.server';
+import { OpenAI } from '~/services';
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   return {

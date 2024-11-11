@@ -1,7 +1,7 @@
 import { ActionFunctionArgs, json, LoaderFunctionArgs } from '@remix-run/node';
 
 import { Users } from '~/database';
-import { Cookies } from '~/services/cookies.server';
+import { Cookies } from '~/services';
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const cookie = await Cookies.userId.parse(request.headers.get('Cookie'));
