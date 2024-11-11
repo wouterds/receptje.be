@@ -37,6 +37,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
         </footer>
         <ScrollRestoration />
         <Scripts />
+        <script
+          defer
+          src="https://cloud.umami.is/script.js"
+          data-website-id="db631045-faaf-4fcf-a74b-4e979e9e4791"></script>
       </body>
     </html>
   );
