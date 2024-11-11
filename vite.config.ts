@@ -1,4 +1,5 @@
 import { vitePlugin as remix } from '@remix-run/dev';
+import { sentryVitePlugin } from '@sentry/vite-plugin';
 import { defineConfig } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
@@ -9,6 +10,13 @@ declare module '@remix-run/node' {
 }
 
 export default defineConfig({
+  build: {
+    target: 'esnext',
+    sourcemap: true,
+  },
+  define: {
+    'process.env.COMMIT_SHA': JSON.stringify(process.env.COMMIT_SHA),
+  },
   plugins: [
     remix({
       appDirectory: 'src',
@@ -21,5 +29,15 @@ export default defineConfig({
       },
     }),
     tsconfigPaths(),
+    sentryVitePlugin({
+      org: 'wouterds',
+      project: 'receptje',
+      release: {
+        name: process.env.COMMIT_SHA,
+      },
+      sourcemaps: {
+        filesToDeleteAfterUpload: ['build/**/*.map'],
+      },
+    }),
   ],
 });

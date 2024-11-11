@@ -2,6 +2,7 @@ import './tailwind.css';
 
 import type { LinksFunction } from '@remix-run/node';
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
+import { withSentry } from '@sentry/remix';
 import { SiOpenai } from 'react-icons/si';
 
 export const links: LinksFunction = () => [
@@ -38,6 +39,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default function App() {
+const App = withSentry(() => {
   return <Outlet />;
-}
+});
+
+export default App;
