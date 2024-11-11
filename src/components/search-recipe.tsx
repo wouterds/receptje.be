@@ -1,5 +1,6 @@
 import { FetcherWithComponents } from '@remix-run/react';
 import clsx from 'clsx';
+import { useRef } from 'react';
 
 type Props = {
   compact?: boolean;
@@ -9,10 +10,17 @@ type Props = {
 
 export const SearchRecipe = ({ compact, defaultValue, fetcher }: Props) => {
   const isLoading = fetcher.state === 'submitting';
+  const inputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <fetcher.Form method="post" className="flex items-center gap-3 sm:gap-4 w-full py-1">
+    <fetcher.Form
+      method="post"
+      className="flex items-center gap-3 sm:gap-4 w-full py-1"
+      onSubmit={() => {
+        inputRef.current?.blur();
+      }}>
       <input
+        ref={inputRef}
         type="text"
         name="q"
         defaultValue={defaultValue}
@@ -22,9 +30,11 @@ export const SearchRecipe = ({ compact, defaultValue, fetcher }: Props) => {
         })}
         placeholder="Zoek een receptje"
         autoFocus
+        tabIndex={1}
         autoComplete="off"
       />
       <button
+        tabIndex={2}
         className={clsx(
           'bg-rose-500 hover:bg-rose-600 transition-colors text-white font-semibold text-sm rounded-full inline-block relative',
           {
