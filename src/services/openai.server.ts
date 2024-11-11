@@ -1,7 +1,7 @@
 import { captureMessage } from '@sentry/remix';
 import OpenAILib from 'openai';
 
-import { AICompletions } from '~/database';
+import { AICompletions, Recipes } from '~/database';
 
 const openai = new OpenAILib({ apiKey: process.env.OPENAI_API_KEY });
 
@@ -65,12 +65,30 @@ export class OpenAI {
       return null;
     }
 
+    const keywords = response.keywords.map((value) => value.toLowerCase());
+    const portions = Number(response.portions);
+    const preparationTime = Number(response.preparationTime);
+    const ingredients = response.ingredients.filter((ingredient) => !!ingredient.description);
+    const steps = response.steps.filter((step) => !!step);
+
+    await Recipes.add({
+      userId,
+      identifier: response.identifier,
+      name: response.name,
+      portions,
+      preparationTime,
+      ingredients,
+      keywords,
+      steps,
+    });
+
     return {
       ...response,
-      keywords: response.keywords.map((value) => value.toLowerCase()),
-      portions: Number(response.portions),
-      preparationTime: Number(response.preparationTime),
-      ingredients: response.ingredients.filter((ingredient) => !!ingredient.description),
+      keywords,
+      portions,
+      preparationTime,
+      ingredients,
+      steps,
     };
   }
 
