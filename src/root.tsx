@@ -2,6 +2,7 @@ import './tailwind.css';
 
 import type { LinksFunction } from '@remix-run/node';
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
+import { SiOpenai } from 'react-icons/si';
 
 export const links: LinksFunction = () => [
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
@@ -26,7 +27,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
+        <div className="flex flex-1 flex-col">{children}</div>
+        <footer className="text-slate-400 text-sm p-6 sm:p-8 flex items-center gap-2 justify-end">
+          Powered by gpt-4o-mini <SiOpenai className="text-base" />
+        </footer>
         <ScrollRestoration />
         <Scripts />
       </body>
