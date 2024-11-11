@@ -1,6 +1,5 @@
 import { captureMessage } from '@sentry/remix';
 import OpenAILib from 'openai';
-import { lowerize } from 'radash';
 
 const openai = new OpenAILib({ apiKey: process.env.OPENAI_API_KEY });
 

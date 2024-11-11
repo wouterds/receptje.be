@@ -1,18 +1,17 @@
-import { InferInsertModel } from 'drizzle-orm';
-import { index, mysqlTable, timestamp, varchar } from 'drizzle-orm/mysql-core';
+import { InferInsertModel, InferSelectModel } from 'drizzle-orm';
+import { index, int, mysqlTable, timestamp, varchar } from 'drizzle-orm/mysql-core';
 
-export type User = InferInsertModel<typeof User>;
+export type User = InferSelectModel<typeof User>;
+export type UserData = InferInsertModel<typeof User>;
 
 export const User = mysqlTable(
   'users',
   {
-    id: varchar('id', { length: 36 })
-      .primaryKey()
-      .$defaultFn(() => crypto.randomUUID()),
+    id: int('id').autoincrement().primaryKey(),
     fingerprint: varchar('fingerprint', { length: 32 }).notNull(),
-    firstName: varchar('first_name', { length: 64 }).notNull(),
-    lastName: varchar('last_name', { length: 64 }).notNull(),
-    email: varchar('email', { length: 128 }).notNull(),
+    firstName: varchar('first_name', { length: 64 }),
+    lastName: varchar('last_name', { length: 64 }),
+    email: varchar('email', { length: 128 }),
     createdAt: timestamp('created_at').notNull().defaultNow(),
     updatedAt: timestamp('updated_at').notNull().defaultNow().onUpdateNow(),
   },

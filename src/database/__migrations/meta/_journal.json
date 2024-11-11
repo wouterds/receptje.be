@@ -15,6 +15,20 @@
       "when": 1731337616537,
       "tag": "0001_wide_nebula",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1731339444705,
+      "tag": "0002_yummy_bug",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1731339948013,
+      "tag": "0003_stormy_invaders",
+      "breakpoints": true
     }
   ]
 }

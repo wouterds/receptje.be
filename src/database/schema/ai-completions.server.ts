@@ -1,14 +1,13 @@
-import { InferInsertModel } from 'drizzle-orm';
-import { index, mysqlTable, text, timestamp, varchar } from 'drizzle-orm/mysql-core';
+import { InferInsertModel, InferSelectModel } from 'drizzle-orm';
+import { index, int, mysqlTable, text, timestamp, varchar } from 'drizzle-orm/mysql-core';
 
-export type AICompletion = InferInsertModel<typeof AICompletion>;
+export type AICompletionData = InferInsertModel<typeof AICompletion>;
+export type AICompletion = InferSelectModel<typeof AICompletion>;
 
 export const AICompletion = mysqlTable(
   'ai-completions',
   {
-    id: varchar('id', { length: 36 })
-      .primaryKey()
-      .$defaultFn(() => crypto.randomUUID()),
+    id: int('id').autoincrement().primaryKey(),
     userId: varchar('user_id', { length: 36 }).notNull(),
     prompt: varchar('prompt', { length: 64 }).notNull(),
     response: text('response').notNull(),

@@ -12,5 +12,5 @@ export const useFingerprint = () => {
     });
   }, []);
 
-  return fingerprint;
+  return { fingerprint };
 };

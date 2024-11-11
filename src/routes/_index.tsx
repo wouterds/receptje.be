@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 import { Code } from '~/components/code';
 import { SearchRecipe } from '~/components/search-recipe';
+import { useUser } from '~/hooks';
 import { OpenAI } from '~/services/openai';
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
@@ -40,6 +41,10 @@ export default function Index() {
   const fetcher = useFetcher<typeof action>();
   const data = fetcher.data;
   const [showCode, setShowCode] = useState(false);
+
+  const { user } = useUser();
+
+  console.log({ user });
 
   return (
     <div className="flex flex-col w-full gap-6 sm:gap-8 py-6 sm:py-8">
