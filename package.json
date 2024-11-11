@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "build": "remix vite:build",
-    "start": "NODE_OPTIONS='--import ./instrumentation.server.mjs' remix-serve ./build/server/index.js",
+    "start": "remix-serve ./build/server/index.js",
+    "start:sentry": "NODE_OPTIONS='--import ./instrumentation.server.mjs' remix-serve ./build/server/index.js",
     "dev": "remix vite:dev",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint ./src",
     "lint:fix": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint ./src --fix",
