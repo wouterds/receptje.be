@@ -1,5 +1,6 @@
 import { captureMessage } from '@sentry/remix';
 import OpenAILib from 'openai';
+import { lowerize } from 'radash';
 
 const openai = new OpenAILib({ apiKey: process.env.OPENAI_API_KEY });
 
@@ -17,19 +18,19 @@ export class OpenAI {
         {
           role: 'system',
           content:
-            'Je bent een expert chef die recepten eenvoudig in het Nederlands (België) schrijft. Geef recepten terug in een gestructureerd JSON formaat (europese stijl, schrijf units voluit tenzij er geen unit is).',
+            'Je bent een expert chef die recepten eenvoudig in het Nederlands (België), europese stijl, schrijft. Units dienen telkens voluit geschreven te worden, tenzij er geen unit is (laat dan deze leeg). In geval dat het over "stukken" gaat, is er geen unit (laat deze leeg).',
         },
         {
           role: 'user',
           content: `Geef me een recept voor: ${prompt}. Geef alleen JSON terug (zonder backticks) in het volgende formaat:
           {
-            "identifier": "simplified-dutch-recipe-slug",
+            "identifier": "simplified-dutch-slug",
             "keywords": ["keyword-in-dutch", "..."],
             "name": "Naam van het gerecht",
             "portions": "Number of portions (number)",
             "preparationTime": "Preparation time in minutes (number)",
             "ingredients": [
-              { "amount": "...", "unit": "...", "item": "..." }
+              { "amount": "...", "unit": "...", "description": "..." }
             ],
             "steps": [
               "Stap 1...",
@@ -51,44 +52,62 @@ export class OpenAI {
 
     if (!this.isValidRecipe(response)) {
       console.error('Invalid recipe format returned from OpenAI');
+      if (process.env.NODE_ENV !== 'production') {
+        console.error(response);
+      }
+
       captureMessage('Invalid recipe format returned from OpenAI', {
         extra: { prompt, completion, response },
       });
       return null;
     }
 
-    return response;
+    return {
+      ...response,
+      keywords: response.keywords.map((value) => value.toLowerCase()),
+      portions: Number(response.portions),
+      preparationTime: Number(response.preparationTime),
+      ingredients: response.ingredients.filter((ingredient) => !!ingredient.description),
+    };
   }
 
-  private static isValidRecipe(recipe: unknown): recipe is Recipe {
-    const r = recipe as Recipe;
-    return (
-      typeof r === 'object' &&
-      r !== null &&
-      typeof r.identifier === 'string' &&
-      typeof r.name === 'string' &&
-      typeof r.portions === 'number' &&
-      typeof r.preparationTime === 'number' &&
-      Array.isArray(r.ingredients) &&
-      r.ingredients.every(
-        (i) =>
-          typeof i.amount === 'string' && typeof i.unit === 'string' && typeof i.item === 'string',
-      ) &&
-      Array.isArray(r.steps) &&
-      r.steps.every((s) => typeof s === 'string')
-    );
+  private static isValidRecipe(value: unknown): value is Recipe {
+    const recipe = value as Recipe;
+
+    if (typeof recipe?.identifier !== 'string') {
+      return false;
+    }
+
+    if (typeof recipe?.name !== 'string') {
+      return false;
+    }
+
+    if (isNaN(recipe.portions)) {
+      return false;
+    }
+
+    if (isNaN(recipe.preparationTime)) {
+      return false;
+    }
+
+    if (!Array.isArray(recipe.ingredients)) {
+      return false;
+    }
+
+    return true;
   }
 }
 
 interface Recipe {
   identifier: string;
   name: string;
+  keywords: string[];
   portions: number;
   preparationTime: number;
   ingredients: {
     amount: string;
     unit: string;
-    item: string;
+    description: string;
   }[];
   steps: string[];
 }

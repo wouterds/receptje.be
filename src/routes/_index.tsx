@@ -1,6 +1,8 @@
 import type { ActionFunctionArgs, MetaFunction } from '@remix-run/node';
 import { Link, useFetcher } from '@remix-run/react';
+import { useState } from 'react';
 
+import { Code } from '~/components/code';
 import { SearchRecipe } from '~/components/search-recipe';
 import { OpenAI } from '~/services/openai';
 
@@ -21,6 +23,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 export default function Index() {
   const fetcher = useFetcher<typeof action>();
   const data = fetcher.data;
+  const [showCode, setShowCode] = useState(false);
 
   return (
     <div className="flex flex-col w-full gap-6 sm:gap-8 py-6 sm:py-8">
@@ -53,7 +56,7 @@ export default function Index() {
                     <span className="font-medium">
                       {ingredient.amount} {ingredient.unit}
                     </span>{' '}
-                    <span>{ingredient.item}</span>
+                    <span>{ingredient.description}</span>
                   </li>
                 ))}
               </ul>
@@ -70,6 +73,14 @@ export default function Index() {
                 ))}
               </ol>
             </div>
+
+            <button
+              onClick={() => setShowCode(!showCode)}
+              className="text-sm text-slate-500 hover:text-slate-700 underline mt-8 mb-4 block">
+              {showCode ? 'Hide raw data' : 'Show raw data'}
+            </button>
+
+            {showCode && <Code lang="json">{JSON.stringify(data.recipe, null, 2)}</Code>}
           </>
         )}
       </main>
