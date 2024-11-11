@@ -41,7 +41,6 @@ export default function Index() {
 
   const fetcher = useFetcher<typeof action>();
   const data = fetcher.data;
-  const [showCode, setShowCode] = useState(false);
 
   return (
     <div className="flex flex-col w-full gap-6 sm:gap-8 py-6 sm:py-8">
