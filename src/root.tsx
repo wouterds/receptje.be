@@ -35,7 +35,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <footer className="text-slate-500 text-sm py-6 px-6 sm:px-10 flex justify-between">
           <span>&copy; {new Date().getFullYear()} receptje.be</span>
           <span className="flex items-center gap-2">
-            Powered by gpt-4o-mini <SiOpenai className="text-base" />
+            powered by gpt-4o-mini <SiOpenai className="text-base" />
           </span>
         </footer>
         <ScrollRestoration />
