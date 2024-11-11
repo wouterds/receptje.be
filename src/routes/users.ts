@@ -1,10 +1,10 @@
 import { ActionFunctionArgs, json, LoaderFunctionArgs } from '@remix-run/node';
 
 import { Users } from '~/database';
-import { userId } from '~/services/cookies.server';
+import { Cookies } from '~/services/cookies.server';
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const cookie = await userId.parse(request.headers.get('Cookie'));
+  const cookie = await Cookies.userId.parse(request.headers.get('Cookie'));
   if (!cookie) {
     return json({ error: 'Unauthorized' }, { status: 401 });
   }
@@ -18,11 +18,11 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 };
 
 export const action = async ({ request }: ActionFunctionArgs) => {
-  const cookie = await userId.parse(request.headers.get('Cookie'));
+  const cookie = await Cookies.userId.parse(request.headers.get('Cookie'));
   if (cookie) {
     const user = await Users.get(cookie);
     if (user) {
-      return json({ user }, { headers: { 'Set-Cookie': await userId.serialize(user.id) } });
+      return json({ user }, { headers: { 'Set-Cookie': await Cookies.userId.serialize(user.id) } });
     }
   }
 
@@ -37,5 +37,5 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     return json({ error: 'Internal server error' }, { status: 500 });
   }
 
-  return json({ user }, { headers: { 'Set-Cookie': await userId.serialize(user.id) } });
+  return json({ user }, { headers: { 'Set-Cookie': await Cookies.userId.serialize(user.id) } });
 };
