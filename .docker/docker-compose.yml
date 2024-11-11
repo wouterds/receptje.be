@@ -2,7 +2,7 @@ services:
   node:
     container_name: be.receptje--node
     image: ghcr.io/wouterds/receptje.be
-    mem_limit: 128mb
+    mem_limit: 256mb
     restart: unless-stopped
     env_file:
       - .env
