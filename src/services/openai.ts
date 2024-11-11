@@ -17,13 +17,14 @@ export class OpenAI {
         {
           role: 'system',
           content:
-            'Je bent een expert chef die recepten in het Nederlands (België) schrijft voor beginners. Geef recepten terug in een gestructureerd JSON formaat (europese stijl, schrijf de units telkens volledig, laat leeg als er geen unit is).',
+            'Je bent een expert chef die recepten eenvoudig in het Nederlands (België) schrijft. Geef recepten terug in een gestructureerd JSON formaat (europese stijl, schrijf units voluit tenzij er geen unit is).',
         },
         {
           role: 'user',
           content: `Geef me een recept voor: ${prompt}. Geef alleen JSON terug (zonder backticks) in het volgende formaat:
           {
             "identifier": "simplified-dutch-recipe-slug",
+            "keywords": ["keyword-in-dutch", "..."],
             "name": "Naam van het gerecht",
             "portions": "Number of portions (number)",
             "preparationTime": "Preparation time in minutes (number)",
