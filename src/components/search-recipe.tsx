@@ -16,7 +16,7 @@ export const SearchRecipe = ({ compact, defaultValue, fetcher }: Props) => {
         type="text"
         name="q"
         defaultValue={defaultValue}
-        className={clsx('border rounded-full flex-1 text-sm', {
+        className={clsx('border rounded-full flex-1 text-sm max-w-xl', {
           'px-6 py-3': !compact,
           'px-4 py-2': compact,
         })}

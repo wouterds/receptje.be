@@ -24,7 +24,7 @@ export default function Index() {
 
   return (
     <div className="flex flex-col w-full gap-6 sm:gap-8 py-6 sm:py-8">
-      <header className="px-6 sm:px-8 flex flex-col gap-4">
+      <header className="px-6 sm:px-8 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8">
         <Link to="/" className="flex-shrink-0">
           <img src="/logo.svg" alt="Receptje.be" className="h-8" />
         </Link>
@@ -32,7 +32,7 @@ export default function Index() {
       </header>
       <main className="px-6 sm:px-8 text-slate-800">
         {data?.recipe && (
-          <div className="max-w-2xl">
+          <>
             <h1 className="text-xl font-semibold mb-1">{data.recipe.name}</h1>
 
             <div className="flex gap-4 mb-3">
@@ -70,7 +70,7 @@ export default function Index() {
                 ))}
               </ol>
             </div>
-          </div>
+          </>
         )}
       </main>
     </div>
