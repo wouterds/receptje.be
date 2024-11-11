@@ -1,4 +1,4 @@
-import type { ActionFunctionArgs, MetaFunction } from '@remix-run/node';
+import type { ActionFunctionArgs, LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
 import { Link, useFetcher } from '@remix-run/react';
 import { useState } from 'react';
 
@@ -6,10 +6,26 @@ import { Code } from '~/components/code';
 import { SearchRecipe } from '~/components/search-recipe';
 import { OpenAI } from '~/services/openai';
 
-export const meta: MetaFunction = () => {
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  return {
+    url: request.url,
+  };
+};
+
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
   return [
-    { title: 'Receptje.be' },
-    { name: 'description', content: 'Zoek makkelijk recepten op Receptje.be' },
+    { title: 'Receptje' },
+    { name: 'description', content: 'Vind je receptje in 1 2 3 op Receptje.be!' },
+    // Open Graph tags
+    { property: 'og:title', content: 'Receptje' },
+    { property: 'og:description', content: 'Vind je receptje in 1 2 3 op Receptje.be!' },
+    { property: 'og:type', content: 'website' },
+    { property: 'og:image', content: new URL('/og.jpg', data?.url).toString() },
+    // Twitter Card tags
+    { name: 'twitter:card', content: 'summary_large_image' },
+    { name: 'twitter:title', content: 'Receptje' },
+    { name: 'twitter:description', content: 'Vind je receptje in 1 2 3 op Receptje.be!' },
+    { name: 'twitter:image', content: new URL('/og.jpg', data?.url).toString() },
   ];
 };
 
