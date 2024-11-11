@@ -14,23 +14,20 @@ const transformUser = (user: User | undefined | null) => {
 
   return {
     ...user,
-    id: sqids.encode([user.id]),
+    encodedId: sqids.encode([user.id]),
   };
 };
 
 const add = async (data: UserData) => {
   const [result] = await db.insert(User).values(data);
-  const user = await db.query.User.findFirst({
-    where: eq(User.id, result.insertId),
-  });
+  const user = await db.query.User.findFirst({ where: eq(User.id, result.insertId) });
 
   return transformUser(user);
 };
 
-const get = async (id: string) => {
-  const user = await db.query.User.findFirst({
-    where: eq(User.id, sqids.decode(id)[0]),
-  });
+const get = async (idOrEncodedId: string | number) => {
+  const id = typeof idOrEncodedId === 'string' ? sqids.decode(idOrEncodedId)[0] : idOrEncodedId;
+  const user = await db.query.User.findFirst({ where: eq(User.id, id) });
 
   return transformUser(user);
 };

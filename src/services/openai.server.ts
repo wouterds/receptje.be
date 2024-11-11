@@ -1,10 +1,12 @@
 import { captureMessage } from '@sentry/remix';
 import OpenAILib from 'openai';
 
+import { AICompletions } from '~/database';
+
 const openai = new OpenAILib({ apiKey: process.env.OPENAI_API_KEY });
 
 export class OpenAI {
-  static async searchRecipe(prompt: string): Promise<Recipe | null> {
+  static async searchRecipe(prompt: string, userId: number): Promise<Recipe | null> {
     if (prompt.length < 4) {
       console.error('Prompt is too short');
       captureMessage('Prompt is too short', { extra: { prompt } });
@@ -46,6 +48,8 @@ export class OpenAI {
       captureMessage('No content returned from OpenAI', { extra: { prompt, completion } });
       return null;
     }
+
+    await AICompletions.add({ userId, prompt, response: JSON.stringify(completion) });
 
     const response = JSON.parse(completion.choices[0].message.content as string);
 

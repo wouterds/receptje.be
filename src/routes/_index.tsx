@@ -3,8 +3,9 @@ import { Link, useFetcher } from '@remix-run/react';
 import clsx from 'clsx';
 
 import { SearchRecipe } from '~/components/search-recipe';
+import { Users } from '~/database';
 import { useUser } from '~/hooks';
-import { OpenAI } from '~/services';
+import { Cookies, OpenAI } from '~/services';
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   return {
@@ -32,8 +33,17 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 export const action = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();
   const q = formData.get('q') as string;
+  if (!q) {
+    throw new Response('Bad request', { status: 400 });
+  }
 
-  return { recipe: await OpenAI.searchRecipe(q), q };
+  const userId = await Cookies.userId.parse(request.headers.get('cookie'));
+  const user = await Users.get(userId);
+  if (!user) {
+    throw new Response('Unauthorized', { status: 401 });
+  }
+
+  return { recipe: await OpenAI.searchRecipe(q, userId), q };
 };
 
 export default function Index() {
