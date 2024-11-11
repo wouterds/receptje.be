@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react';
 
-import type { TransformedUser } from '~/database';
-
 import { useFingerprint } from './use-fingerprint';
 import { useLocalStorage } from './use-local-storage';
 
 export const useUser = () => {
-  const [user, setUser] = useState<TransformedUser | null>(null);
-  const [, setUserId] = useLocalStorage('user.id');
+  const [user, setUser] = useState<{ id: string } | null>(null);
+  const [, setUserId] = useLocalStorage('userId');
   const { fingerprint } = useFingerprint();
 
   useEffect(() => {
