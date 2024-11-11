@@ -32,8 +32,20 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         <div className="flex flex-1 flex-col">{children}</div>
-        <footer className="text-slate-400 text-sm p-6 sm:p-8 flex items-center gap-2 justify-end">
-          Powered by gpt-4o-mini <SiOpenai className="text-base" />
+        <footer className="text-slate-400 text-sm p-6 sm:p-8 flex justify-between">
+          <span>
+            Made by{' '}
+            <a
+              href="https://wouterds.be"
+              target="_blank"
+              rel="noreferrer"
+              className="hover:underline hover:text-slate-600">
+              wouterds.be
+            </a>
+          </span>
+          <span className="flex items-center gap-2">
+            Powered by gpt-4o-mini <SiOpenai className="text-base" />
+          </span>
         </footer>
         <ScrollRestoration />
         <Scripts />
