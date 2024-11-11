@@ -1,6 +1,5 @@
 import type { ActionFunctionArgs, LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
 import { Link, useFetcher } from '@remix-run/react';
-import { useState } from 'react';
 
 import { SearchRecipe } from '~/components/search-recipe';
 import { useUser } from '~/hooks';
