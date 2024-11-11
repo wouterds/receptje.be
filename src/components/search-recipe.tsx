@@ -3,12 +3,11 @@ import clsx from 'clsx';
 import { useRef } from 'react';
 
 type Props = {
-  compact?: boolean;
   defaultValue?: string;
   fetcher: FetcherWithComponents<unknown>;
 };
 
-export const SearchRecipe = ({ compact, defaultValue, fetcher }: Props) => {
+export const SearchRecipe = ({ defaultValue, fetcher }: Props) => {
   const isLoading = fetcher.state === 'submitting';
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -24,10 +23,7 @@ export const SearchRecipe = ({ compact, defaultValue, fetcher }: Props) => {
         type="text"
         name="q"
         defaultValue={defaultValue}
-        className={clsx('border rounded-full flex-1 text-sm max-w-xl', {
-          'px-6 py-3': !compact,
-          'px-4 py-2': compact,
-        })}
+        className="border rounded-full flex-1 text-sm max-w-xl px-4 py-2 sm:px-6 sm:py-3"
         placeholder="Zoek een receptje"
         autoFocus
         tabIndex={1}
@@ -35,13 +31,7 @@ export const SearchRecipe = ({ compact, defaultValue, fetcher }: Props) => {
       />
       <button
         tabIndex={2}
-        className={clsx(
-          'bg-rose-500 hover:bg-rose-600 transition-colors text-white font-semibold text-sm rounded-full inline-block relative',
-          {
-            'px-6 py-3': !compact,
-            'px-4 py-2': compact,
-          },
-        )}
+        className="bg-rose-500 hover:bg-rose-600 transition-colors text-white font-semibold text-sm rounded-full inline-block relative px-4 py-2 sm:px-6 sm:py-3"
         type="submit">
         <span
           className={clsx({

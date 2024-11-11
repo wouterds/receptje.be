@@ -43,14 +43,14 @@ export default function Index() {
   const data = fetcher.data;
 
   return (
-    <div className="flex flex-col w-full gap-6 sm:gap-8 py-6 sm:py-8">
-      <header className="px-6 sm:px-8 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8">
+    <div className="flex flex-col w-full gap-6 sm:gap-8 py-6">
+      <header className="px-6 sm:px-10 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-8">
         <Link to="/" className="flex-shrink-0">
           <img src="/logo.svg" alt="Receptje.be" className="h-8" />
         </Link>
         <SearchRecipe fetcher={fetcher} />
       </header>
-      <main className="px-6 sm:px-8 text-slate-800">
+      <main className="px-6 sm:px-10 text-slate-800">
         {data?.recipe && (
           <>
             <h1 className="text-xl font-semibold mb-1">{data.recipe.name}</h1>
