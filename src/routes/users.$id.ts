@@ -9,6 +9,9 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
   }
 
   const user = await Users.get(id);
+  if (!user) {
+    throw json({ error: 'Not found' }, { status: 404 });
+  }
 
   return json({ user });
 };

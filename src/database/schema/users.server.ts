@@ -3,6 +3,9 @@ import { index, int, mysqlTable, timestamp, varchar } from 'drizzle-orm/mysql-co
 
 export type User = InferSelectModel<typeof User>;
 export type UserData = InferInsertModel<typeof User>;
+export type TransformedUser = Omit<User, 'id'> & {
+  id: string;
+};
 
 export const User = mysqlTable(
   'users',

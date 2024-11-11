@@ -38,13 +38,11 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 };
 
 export default function Index() {
+  useUser();
+
   const fetcher = useFetcher<typeof action>();
   const data = fetcher.data;
   const [showCode, setShowCode] = useState(false);
-
-  const { user } = useUser();
-
-  console.log({ user });
 
   return (
     <div className="flex flex-col w-full gap-6 sm:gap-8 py-6 sm:py-8">

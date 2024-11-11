@@ -4,9 +4,13 @@ export const useLocalStorage = (key: string) => {
   const [value, setValue] = useState<string | null>(null);
 
   useEffect(() => {
-    const value = localStorage.getItem(key);
-    setValue(value);
-  }, [key]);
+    setValue(localStorage.getItem(key));
+  }, [key, setValue]);
 
-  return [value, setValue] as const;
+  const setValueProxy = (value: string) => {
+    localStorage.setItem(key, value);
+    setValue(value);
+  };
+
+  return [value, setValueProxy] as const;
 };
