@@ -8,8 +8,8 @@ export const AICompletion = mysqlTable(
   'ai-completions',
   {
     id: int('id').autoincrement().primaryKey(),
-    userId: varchar('user_id', { length: 36 }).notNull(),
-    prompt: varchar('prompt', { length: 64 }).notNull(),
+    userId: int('user_id').notNull(),
+    prompt: varchar('prompt', { length: 128 }).notNull(),
     response: text('response').notNull(),
     createdAt: timestamp('created_at').notNull().defaultNow(),
     updatedAt: timestamp('updated_at').notNull().defaultNow().onUpdateNow(),
