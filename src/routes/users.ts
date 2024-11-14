@@ -14,7 +14,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     return json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  return json({ user: { id: user.encodedId, createdAt: user.createdAt } });
+  return json({ user });
 };
 
 export const action = async ({ request }: ActionFunctionArgs) => {
@@ -22,10 +22,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   if (cookie) {
     const user = await Users.get(cookie);
     if (user) {
-      return json(
-        { user: { id: user.encodedId, createdAt: user.createdAt } },
-        { headers: { 'Set-Cookie': await Cookies.userId.serialize(user.id) } },
-      );
+      return json({ user }, { headers: { 'Set-Cookie': await Cookies.userId.serialize(user.id) } });
     }
   }
 
@@ -40,8 +37,5 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     return json({ error: 'Internal server error' }, { status: 500 });
   }
 
-  return json(
-    { user: { id: user.encodedId, createdAt: user.createdAt } },
-    { headers: { 'Set-Cookie': await Cookies.userId.serialize(user.id) } },
-  );
+  return json({ user }, { headers: { 'Set-Cookie': await Cookies.userId.serialize(user.id) } });
 };
