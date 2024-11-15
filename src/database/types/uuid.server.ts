@@ -1,9 +1,9 @@
 import { sql } from 'drizzle-orm';
 import { customType } from 'drizzle-orm/mysql-core';
-import shortUuid from 'short-uuid';
+import ShortUuid from 'short-uuid';
 import { validate as validateUUID } from 'uuid';
 
-const translator = shortUuid();
+const shortUuid = ShortUuid();
 
 type UUID = string & {
   short?: string;
@@ -16,9 +16,11 @@ export const uuid = customType<{ data: UUID; driverData: Buffer }>({
   },
 
   toDriver(value) {
-    const uuid = translator.validate(value?.toString())
-      ? translator.toUUID(value?.toString())
-      : value?.toString();
+    if (typeof value !== 'string') {
+      return sql.raw('NULL');
+    }
+
+    const uuid = shortUuid.validate(value) ? shortUuid.toUUID(value) : value;
     if (!validateUUID(uuid)) {
       return sql.raw('NULL');
     }
@@ -35,7 +37,7 @@ export const uuid = customType<{ data: UUID; driverData: Buffer }>({
         .replace(/^(.{8})(.{4})(.{4})(.{4})(.{12})$/, '$1-$2-$3-$4-$5'),
     );
 
-    Object.assign(uuid, { short: translator.fromUUID(uuid.toString()) });
+    Object.assign(uuid, { short: shortUuid.fromUUID(uuid.toString()) });
 
     return uuid as UUID;
   },
