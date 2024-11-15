@@ -4,7 +4,6 @@ import { useFingerprint } from './use-fingerprint';
 
 export const useUser = () => {
   const [user, setUser] = useState<{ id: string } | null>(null);
-  const [, setUserId] = useLocalStorage('userId');
   const { fingerprint } = useFingerprint();
 
   useEffect(() => {
@@ -20,12 +19,6 @@ export const useUser = () => {
       .then((res) => res.json())
       .then((data) => setUser(data));
   }, [fingerprint]);
-
-  useEffect(() => {
-    if (user) {
-      setUserId(user.id);
-    }
-  }, [user, setUserId]);
 
   return { user };
 };
