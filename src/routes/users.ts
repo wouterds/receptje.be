@@ -6,9 +6,12 @@ import { Cookies } from '~/services';
 export const action = async ({ request }: ActionFunctionArgs) => {
   const cookie = await Cookies.userId.parse(request.headers.get('Cookie'));
   if (cookie) {
-    const user = await Users.get(cookie);
+    const user = await Users.get(cookie.toString());
     if (user) {
-      return json({ user }, { headers: { 'Set-Cookie': await Cookies.userId.serialize(user.id) } });
+      return json(
+        { id: user.id },
+        { headers: { 'Set-Cookie': await Cookies.userId.serialize(user.id) } },
+      );
     }
   }
 
@@ -23,5 +26,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     return json({ error: 'Internal server error' }, { status: 500 });
   }
 
-  return json({ user }, { headers: { 'Set-Cookie': await Cookies.userId.serialize(user.id) } });
+  return json(
+    { id: user.id },
+    { headers: { 'Set-Cookie': await Cookies.userId.serialize(user.id) } },
+  );
 };

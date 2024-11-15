@@ -1,5 +1,9 @@
+import crypto from 'node:crypto';
+
 import { InferInsertModel, InferSelectModel } from 'drizzle-orm';
-import { index, int, mysqlTable, timestamp, varchar } from 'drizzle-orm/mysql-core';
+import { index, mysqlTable, timestamp, varchar } from 'drizzle-orm/mysql-core';
+
+import { uuid } from '~/database/types/uuid.server';
 
 export type User = InferSelectModel<typeof User>;
 export type UserData = InferInsertModel<typeof User>;
@@ -7,7 +11,9 @@ export type UserData = InferInsertModel<typeof User>;
 export const User = mysqlTable(
   'users',
   {
-    id: int('id').autoincrement().primaryKey(),
+    id: uuid('id')
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
     fingerprint: varchar('fingerprint', { length: 32 }).notNull(),
     firstName: varchar('first_name', { length: 64 }),
     lastName: varchar('last_name', { length: 64 }),
@@ -15,11 +21,9 @@ export const User = mysqlTable(
     createdAt: timestamp('created_at').notNull().defaultNow(),
     updatedAt: timestamp('updated_at').notNull().defaultNow().onUpdateNow(),
   },
-  (table) => {
-    return {
-      fingerprintIdx: index('fingerprint_idx').on(table.fingerprint),
-      emailIdx: index('email_idx').on(table.email),
-      createdAtIdx: index('created_at_idx').on(table.createdAt),
-    };
-  },
+  (table) => ({
+    fingerprintIdx: index('fingerprint_idx').on(table.fingerprint),
+    emailIdx: index('email_idx').on(table.email),
+    createdAtIdx: index('created_at_idx').on(table.createdAt),
+  }),
 );

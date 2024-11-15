@@ -43,6 +43,13 @@
       "when": 1731357848479,
       "tag": "0005_salty_zaran",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1731629169229,
+      "tag": "0006_dashing_master_chief",
+      "breakpoints": true
     }
   ]
 }

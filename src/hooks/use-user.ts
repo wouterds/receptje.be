@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
 import { useFingerprint } from './use-fingerprint';
-import { useLocalStorage } from './use-local-storage';
 
 export const useUser = () => {
   const [user, setUser] = useState<{ id: string } | null>(null);
@@ -19,9 +18,7 @@ export const useUser = () => {
       body: JSON.stringify({ fingerprint }),
     })
       .then((res) => res.json())
-      .then((data) => {
-        setUser(data?.user || null);
-      });
+      .then((data) => setUser(data));
   }, [fingerprint]);
 
   useEffect(() => {
