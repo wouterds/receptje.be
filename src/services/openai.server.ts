@@ -6,7 +6,7 @@ import { AICompletions, Recipes } from '~/database';
 const openai = new OpenAILib({ apiKey: process.env.OPENAI_API_KEY });
 
 export class OpenAI {
-  static async searchRecipe(prompt: string, userId: number): Promise<Recipe | null> {
+  static async searchRecipe(prompt: string, userId: string): Promise<Recipe | null> {
     if (prompt.length < 4) {
       console.error('Prompt is too short');
       captureMessage('Prompt is too short', { extra: { prompt } });
