@@ -12,16 +12,14 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   return [
     { title: 'Receptje' },
-    { name: 'description', content: 'Vind je receptje in 1 2 3 op Receptje.be!' },
-    // Open Graph tags
+    { name: 'description', content: 'Vind je recept in 1 2 3 op Receptje.be!' },
     { property: 'og:title', content: 'Receptje' },
-    { property: 'og:description', content: 'Vind je receptje in 1 2 3 op Receptje.be!' },
+    { property: 'og:description', content: 'Vind je recept in 1 2 3 op Receptje.be!' },
     { property: 'og:type', content: 'website' },
     { property: 'og:image', content: new URL('/og.png', data?.url).toString() },
-    // Twitter Card tags
     { name: 'twitter:card', content: 'summary_large_image' },
     { name: 'twitter:title', content: 'Receptje' },
-    { name: 'twitter:description', content: 'Vind je receptje in 1 2 3 op Receptje.be!' },
+    { name: 'twitter:description', content: 'Vind je recept in 1 2 3 op Receptje.be!' },
     { name: 'twitter:image', content: new URL('/og.png', data?.url).toString() },
   ];
 };

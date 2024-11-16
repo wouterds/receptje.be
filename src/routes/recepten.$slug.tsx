@@ -21,10 +21,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
     throw redirect(`/recepten/${slug}`);
   }
 
-  return {
-    recipe,
-    url: request.url,
-  };
+  return { recipe, url: request.url };
 };
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
@@ -35,13 +32,11 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
   return [
     { title: `${data.recipe.name} - Receptje` },
     { name: 'description', content: `Recept voor ${data.recipe.name}` },
-    // Open Graph tags
     { property: 'og:title', content: data.recipe.name },
     { property: 'og:description', content: `Recept voor ${data.recipe.name}` },
     { property: 'og:type', content: 'article' },
     { property: 'og:url', content: data.url },
     { property: 'og:image', content: new URL('/og.png', data.url).toString() },
-    // Twitter Card tags
     { name: 'twitter:card', content: 'summary_large_image' },
     { name: 'twitter:title', content: data.recipe.name },
     { name: 'twitter:description', content: `Recept voor ${data.recipe.name}` },
@@ -50,7 +45,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 };
 
 export default function RecipeDetail() {
-  const { recipe, url } = useLoaderData<typeof loader>();
+  const { recipe } = useLoaderData<typeof loader>();
 
   return (
     <div className="flex flex-col w-full gap-6 sm:gap-8 py-6">
