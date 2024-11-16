@@ -4,7 +4,11 @@ import { useRef } from 'react';
 
 import { action } from '~/routes/search';
 
-export const SearchRecipe = () => {
+type Props = {
+  autoFocus?: boolean;
+};
+
+export const SearchRecipe = ({ autoFocus }: Props) => {
   const fetcher = useFetcher<typeof action>();
   const isLoading = fetcher.state === 'submitting';
   const inputRef = useRef<HTMLInputElement>(null);
@@ -23,7 +27,7 @@ export const SearchRecipe = () => {
         name="q"
         className="border rounded-full flex-1 text-sm max-w-xl px-4 py-2 sm:px-6 sm:py-3 bg-white/50 placeholder:text-black/50"
         placeholder="Zoek een receptje"
-        autoFocus
+        autoFocus={autoFocus}
         tabIndex={1}
         autoComplete="off"
       />

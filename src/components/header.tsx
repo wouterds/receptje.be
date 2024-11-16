@@ -3,14 +3,18 @@ import clsx from 'clsx';
 
 import { SearchRecipe } from './search-recipe';
 
-export const Header = () => {
+type Props = {
+  autoFocus?: boolean;
+};
+
+export const Header = ({ autoFocus }: Props) => {
   return (
     <header className="px-6 sm:px-10 flex justify-between items-center">
       <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-8 flex-1">
         <Link to="/" className="flex-shrink-0">
           <img src="/logo.svg" alt="Receptje.be" className="h-8" />
         </Link>
-        <SearchRecipe />
+        <SearchRecipe autoFocus={autoFocus} />
       </div>
       <nav className="text-sm font-semibold text-slate-800 flex-shrink-0 hidden">
         <Link to="/mijn-receptjes" className="relative hover:text-slate-600 transition-colors">

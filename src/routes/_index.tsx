@@ -29,7 +29,7 @@ export default function Index() {
 
   return (
     <div className="flex flex-col w-full gap-6 sm:gap-8 py-6">
-      <Header />
+      <Header autoFocus />
     </div>
   );
 }
