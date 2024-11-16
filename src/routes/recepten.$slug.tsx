@@ -1,6 +1,6 @@
 import { LoaderFunctionArgs, MetaFunction, redirect } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
-import { LuClock, LuShare2, LuUser2 } from 'react-icons/lu';
+import { LuClock, LuUser2 } from 'react-icons/lu';
 
 import { Header } from '~/components/header';
 import { Recipes } from '~/database';
@@ -52,25 +52,6 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 export default function RecipeDetail() {
   const { recipe, url } = useLoaderData<typeof loader>();
 
-  const shareData = {
-    title: `${recipe.name} - Receptje`,
-    text: `Bekijk dit recept voor ${recipe.name}`,
-    url: url,
-  };
-
-  const handleShare = async () => {
-    try {
-      if (navigator.share) {
-        await navigator.share(shareData);
-      } else {
-        await navigator.clipboard.writeText(url);
-        // You might want to add a toast notification here
-      }
-    } catch (error) {
-      console.error('Error sharing:', error);
-    }
-  };
-
   return (
     <div className="flex flex-col w-full gap-6 sm:gap-8 py-6">
       <Header />
@@ -78,12 +59,6 @@ export default function RecipeDetail() {
       <main className="px-6 sm:px-10 text-slate-800">
         <div className="flex justify-between items-start mb-1">
           <h1 className="text-xl font-semibold">{recipe.name}</h1>
-          <button
-            onClick={handleShare}
-            className="p-2 text-slate-600 hover:text-slate-800 transition-colors"
-            aria-label="Deel recept">
-            <LuShare2 className="w-6 h-6" />
-          </button>
         </div>
 
         <div className="flex gap-4 mb-3">
