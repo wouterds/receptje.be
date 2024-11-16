@@ -1,24 +1,13 @@
-import { FetcherWithComponents, useNavigate } from '@remix-run/react';
+import { useFetcher } from '@remix-run/react';
 import clsx from 'clsx';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 
 import { action } from '~/routes/search';
 
-type Props = {
-  defaultValue?: string;
-  fetcher: FetcherWithComponents<Awaited<ReturnType<typeof action>>>;
-};
-
-export const SearchRecipe = ({ defaultValue, fetcher }: Props) => {
+export const SearchRecipe = () => {
+  const fetcher = useFetcher<typeof action>();
   const isLoading = fetcher.state === 'submitting';
   const inputRef = useRef<HTMLInputElement>(null);
-
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (fetcher.data?.recipe) {
-      navigate(`/recepten/${fetcher.data.recipe?.identifier}-${fetcher.data.recipe?.id}`);
-    }
-  }, [fetcher.data?.recipe, navigate]);
 
   return (
     <fetcher.Form
@@ -32,7 +21,6 @@ export const SearchRecipe = ({ defaultValue, fetcher }: Props) => {
         ref={inputRef}
         type="text"
         name="q"
-        defaultValue={defaultValue}
         className="border rounded-full flex-1 text-sm max-w-xl px-4 py-2 sm:px-6 sm:py-3"
         placeholder="Zoek een receptje"
         autoFocus
