@@ -1,4 +1,4 @@
-import { LoaderFunctionArgs, MetaFunction, redirect } from '@remix-run/node';
+import { json, LoaderFunctionArgs, MetaFunction, redirect } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import { LuClock, LuUser2 } from 'react-icons/lu';
 
@@ -17,7 +17,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
     throw redirect(`/recepten/${slug}`);
   }
 
-  return { recipe, url: request.url };
+  return json({ recipe, url: request.url });
 };
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
