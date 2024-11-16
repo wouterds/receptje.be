@@ -1,7 +1,6 @@
 import { LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
 
 import { Header } from '~/components/header';
-import { useUser } from '~/hooks';
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   return {
@@ -25,8 +24,6 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 };
 
 export default function Index() {
-  useUser();
-
   return (
     <div className="flex flex-col w-full gap-6 sm:gap-8 py-6">
       <Header autoFocus />

@@ -2,6 +2,7 @@ import { useFetcher } from '@remix-run/react';
 import clsx from 'clsx';
 import { useRef } from 'react';
 
+import { useUser } from '~/hooks';
 import { action } from '~/routes/search';
 
 type Props = {
@@ -9,6 +10,8 @@ type Props = {
 };
 
 export const SearchRecipe = ({ autoFocus }: Props) => {
+  useUser();
+
   const fetcher = useFetcher<typeof action>();
   const isLoading = fetcher.state === 'submitting';
   const inputRef = useRef<HTMLInputElement>(null);
