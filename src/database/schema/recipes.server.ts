@@ -17,6 +17,7 @@ export const Recipe = mysqlTable(
     userId: uuid('user_id').notNull(),
     identifier: varchar('identifier', { length: 128 }).notNull(),
     name: varchar('name', { length: 128 }).notNull(),
+    description: varchar('description', { length: 512 }).notNull(),
     portions: int('portions').notNull(),
     preparationTime: int('preparation_time').notNull(),
     ingredients: json('ingredients').notNull(),

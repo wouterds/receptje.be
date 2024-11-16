@@ -27,15 +27,15 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 
   return [
     { title: `${data.recipe.name} - Receptje.be` },
-    { name: 'description', content: `Recept ${data.recipe.name}` },
+    { name: 'description', content: data.recipe.name },
     { property: 'og:title', content: data.recipe.name },
-    { property: 'og:description', content: `Recept ${data.recipe.name}` },
+    { property: 'og:description', content: data.recipe.name },
     { property: 'og:type', content: 'article' },
     { property: 'og:url', content: data.url },
     { property: 'og:image', content: new URL('/og.png', data.url).toString() },
     { name: 'twitter:card', content: 'summary_large_image' },
     { name: 'twitter:title', content: data.recipe.name },
-    { name: 'twitter:description', content: `Recept ${data.recipe.name}` },
+    { name: 'twitter:description', content: data.recipe.name },
     { name: 'twitter:image', content: new URL('/og.png', data.url).toString() },
   ];
 };

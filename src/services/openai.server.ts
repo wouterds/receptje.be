@@ -28,6 +28,7 @@ export class OpenAI {
             "identifier": "simplified-dutch-slug",
             "keywords": ["keyword-in-dutch", "..."],
             "name": "Naam van het gerecht (zonder "gerecht" of "recept")",
+            "description": "Korte & duidelijke beschrijving van het gerecht. Overdrijf niet met bijvoegelijke naamwoordenn, blijf bij de essentie. (120 - 160 characters).",
             "portions": "Aantal porties (getal)",
             "preparationTime": "Bereidingstijd in minuten (getal)",
             "ingredients": [
@@ -75,6 +76,7 @@ export class OpenAI {
       userId,
       identifier: response.identifier,
       name: response.name,
+      description: response.description,
       portions,
       preparationTime,
       ingredients,
@@ -104,6 +106,10 @@ export class OpenAI {
       return false;
     }
 
+    if (typeof recipe?.description !== 'string') {
+      return false;
+    }
+
     if (isNaN(recipe.portions)) {
       return false;
     }
@@ -124,6 +130,7 @@ interface Recipe {
   id: string;
   identifier: string;
   name: string;
+  description: string;
   keywords: string[];
   portions: number;
   preparationTime: number;

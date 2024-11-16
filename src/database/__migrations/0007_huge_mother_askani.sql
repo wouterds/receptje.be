@@ -1,0 +1,1 @@
+ALTER TABLE `recipes` ADD `description` varchar(512) NOT NULL;
