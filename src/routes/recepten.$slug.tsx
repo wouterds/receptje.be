@@ -6,11 +6,7 @@ import { Header } from '~/components/header';
 import { Recipes } from '~/database';
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
-  const identifier = params.slug?.split('-')?.pop() || '';
-  if (!identifier) {
-    throw new Response('Recept niet gevonden', { status: 404 });
-  }
-
+  const identifier = params.slug?.split('-')?.pop();
   const recipe = await Recipes.getById(identifier);
   if (!recipe) {
     throw new Response('Recept niet gevonden', { status: 404 });
@@ -30,16 +26,16 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
   }
 
   return [
-    { title: `${data.recipe.name} - Receptje` },
-    { name: 'description', content: `Recept voor ${data.recipe.name}` },
+    { title: `${data.recipe.name} - Receptje.be` },
+    { name: 'description', content: `Recept ${data.recipe.name}` },
     { property: 'og:title', content: data.recipe.name },
-    { property: 'og:description', content: `Recept voor ${data.recipe.name}` },
+    { property: 'og:description', content: `Recept ${data.recipe.name}` },
     { property: 'og:type', content: 'article' },
     { property: 'og:url', content: data.url },
     { property: 'og:image', content: new URL('/og.png', data.url).toString() },
     { name: 'twitter:card', content: 'summary_large_image' },
     { name: 'twitter:title', content: data.recipe.name },
-    { name: 'twitter:description', content: `Recept voor ${data.recipe.name}` },
+    { name: 'twitter:description', content: `Recept ${data.recipe.name}` },
     { name: 'twitter:image', content: new URL('/og.png', data.url).toString() },
   ];
 };

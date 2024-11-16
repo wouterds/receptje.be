@@ -12,7 +12,11 @@ const add = async (data: RecipeData) => {
   return db.query.Recipe.findFirst({ where: eq(Recipe.id, id) });
 };
 
-const getById = async (id: string) => {
+const getById = async (id?: string) => {
+  if (!id) {
+    return null;
+  }
+
   const recipe = await db.query.Recipe.findFirst({ where: eq(Recipe.id, id) });
   if (!recipe) {
     return null;

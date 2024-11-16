@@ -1,8 +1,16 @@
 import './tailwind.css';
 
 import type { LinksFunction } from '@remix-run/node';
-import { Links, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
-import { withSentry } from '@sentry/remix';
+import {
+  isRouteErrorResponse,
+  Links,
+  Meta,
+  Outlet,
+  Scripts,
+  ScrollRestoration,
+  useRouteError,
+} from '@remix-run/react';
+import { captureRemixErrorBoundaryError, withSentry } from '@sentry/remix';
 import { SiOpenai } from 'react-icons/si';
 
 export const links: LinksFunction = () => [
@@ -48,8 +56,39 @@ export function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
-const App = withSentry(() => {
-  return <Outlet />;
-});
+export const ErrorBoundary = () => {
+  const error = useRouteError();
 
-export default App;
+  captureRemixErrorBoundaryError(error);
+
+  let heading = 'Oeps, er is iets misgegaan';
+  let message = 'Er is een onverwachte fout opgetreden. Probeer het later opnieuw.';
+
+  if (isRouteErrorResponse(error)) {
+    heading = `${error.status} ${error.statusText}`;
+    message = error.data;
+  } else if (error instanceof Error) {
+    message = error.message;
+  }
+
+  return (
+    <html lang="nl-BE">
+      <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <title>Error - receptje.be</title>
+        <Meta />
+        <Links />
+      </head>
+      <body>
+        <div className="flex flex-1 flex-col items-center justify-center min-h-screen p-6">
+          <h1 className="text-2xl font-bold mb-4">{heading}</h1>
+          <p className="text-gray-600 text-center max-w-md">{message}</p>
+        </div>
+        <Scripts />
+      </body>
+    </html>
+  );
+};
+
+export default withSentry(() => <Outlet />, { wrapWithErrorBoundary: false });
