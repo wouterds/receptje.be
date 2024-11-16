@@ -12,18 +12,21 @@ const add = async (data: RecipeData) => {
   return db.query.Recipe.findFirst({ where: eq(Recipe.id, id) });
 };
 
-const get = async (id: string) => {
-  return db.query.Recipe.findFirst({ where: eq(Recipe.id, id) });
-};
+const getById = async (id: string) => {
+  const recipe = await db.query.Recipe.findFirst({ where: eq(Recipe.id, id) });
+  if (!recipe) {
+    return null;
+  }
 
-const getByUserId = async (userId: string) => {
-  return db.query.Recipe.findMany({
-    where: eq(Recipe.userId, userId),
-  });
+  return {
+    ...recipe,
+    ingredients: JSON.parse(recipe.ingredients as string),
+    steps: JSON.parse(recipe.steps as string),
+    keywords: JSON.parse(recipe.keywords as string),
+  };
 };
 
 export const Recipes = {
   add,
-  get,
-  getByUserId,
+  getById,
 };

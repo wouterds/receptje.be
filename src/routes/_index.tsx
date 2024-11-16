@@ -1,6 +1,7 @@
 import type { ActionFunctionArgs, LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
 import { Link, useFetcher } from '@remix-run/react';
 import clsx from 'clsx';
+import { LuClock, LuUser2 } from 'react-icons/lu';
 
 import { SearchRecipe } from '~/components/search-recipe';
 import { Users } from '~/database';
@@ -43,7 +44,9 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     throw new Response('Unauthorized', { status: 401 });
   }
 
-  return { recipe: await OpenAI.searchRecipe(q, userId), q };
+  const recipe = await OpenAI.searchRecipe(q, userId);
+
+  return { recipe, q };
 };
 
 export default function Index() {
@@ -82,12 +85,18 @@ export default function Index() {
             <h1 className="text-xl font-semibold mb-1">{data.recipe.name}</h1>
 
             <div className="flex gap-4 mb-3">
-              <p>
-                <span className="font-medium">{data.recipe.portions}</span>{' '}
-                {data.recipe.portions === 1 ? 'portie' : 'porties'}
+              <p className="flex items-center gap-2">
+                <LuUser2 className="text-rose-500 text-lg" />
+                <span>
+                  <span className="font-medium">{data.recipe.portions}</span>{' '}
+                  {data.recipe.portions === 1 ? 'portie' : 'porties'}
+                </span>
               </p>
-              <p>
-                <span className="font-medium">{data.recipe.preparationTime}</span> minuten
+              <p className="flex items-center gap-2">
+                <LuClock className="text-rose-500 text-lg" />
+                <span>
+                  <span className="font-medium">{data.recipe.preparationTime}</span> minuten
+                </span>
               </p>
             </div>
 

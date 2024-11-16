@@ -71,7 +71,7 @@ export class OpenAI {
     const ingredients = response.ingredients.filter((ingredient) => !!ingredient.description);
     const steps = response.steps.filter((step) => !!step);
 
-    await Recipes.add({
+    const recipe = await Recipes.add({
       userId,
       identifier: response.identifier,
       name: response.name,
@@ -89,6 +89,7 @@ export class OpenAI {
       preparationTime,
       ingredients,
       steps,
+      id: recipe!.id,
     };
   }
 
@@ -120,6 +121,7 @@ export class OpenAI {
 }
 
 interface Recipe {
+  id: string;
   identifier: string;
   name: string;
   keywords: string[];
