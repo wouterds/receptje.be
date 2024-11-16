@@ -21,12 +21,12 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
     { property: 'og:title', content: 'Receptje' },
     { property: 'og:description', content: 'Vind je receptje in 1 2 3 op Receptje.be!' },
     { property: 'og:type', content: 'website' },
-    { property: 'og:image', content: new URL('/og.jpg', data?.url).toString() },
+    { property: 'og:image', content: new URL('/og.png', data?.url).toString() },
     // Twitter Card tags
     { name: 'twitter:card', content: 'summary_large_image' },
     { name: 'twitter:title', content: 'Receptje' },
     { name: 'twitter:description', content: 'Vind je receptje in 1 2 3 op Receptje.be!' },
-    { name: 'twitter:image', content: new URL('/og.jpg', data?.url).toString() },
+    { name: 'twitter:image', content: new URL('/og.png', data?.url).toString() },
   ];
 };
 
