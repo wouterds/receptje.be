@@ -21,7 +21,7 @@ export const SearchRecipe = () => {
         ref={inputRef}
         type="text"
         name="q"
-        className="border rounded-full flex-1 text-sm max-w-xl px-4 py-2 sm:px-6 sm:py-3"
+        className="border rounded-full flex-1 text-sm max-w-xl px-4 py-2 sm:px-6 sm:py-3 bg-white/50 placeholder:text-black/50"
         placeholder="Zoek een receptje"
         autoFocus
         tabIndex={1}
@@ -29,7 +29,7 @@ export const SearchRecipe = () => {
       />
       <button
         tabIndex={2}
-        className="bg-rose-500 hover:bg-rose-600 transition-colors text-white font-semibold text-sm rounded-full inline-block relative px-4 py-2 sm:px-6 sm:py-3"
+        className="bg-rose-500 hover:bg-rose-600 transition-colors text-tint font-semibold text-sm rounded-full inline-block relative px-4 py-2 sm:px-6 sm:py-3"
         type="submit">
         <span
           className={clsx({
