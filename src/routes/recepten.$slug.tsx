@@ -1,8 +1,11 @@
 import { LoaderFunctionArgs, MetaFunction, redirect } from '@remix-run/node';
-import { Link, useLoaderData } from '@remix-run/react';
+import { useFetcher, useLoaderData } from '@remix-run/react';
 import { LuClock, LuShare2, LuUser2 } from 'react-icons/lu';
 
+import { Header } from '~/components/header';
 import { Recipes } from '~/database';
+
+import { action } from './search';
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   const identifier = params.slug?.split('-')?.pop() || '';
@@ -50,6 +53,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 
 export default function RecipeDetail() {
   const { recipe, url } = useLoaderData<typeof loader>();
+  const fetcher = useFetcher<Awaited<ReturnType<typeof action>>>();
 
   const shareData = {
     title: `${recipe.name} - Receptje`,
@@ -72,13 +76,7 @@ export default function RecipeDetail() {
 
   return (
     <div className="flex flex-col w-full gap-6 sm:gap-8 py-6">
-      <header className="px-6 sm:px-10 flex justify-between items-center">
-        <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-8 flex-1">
-          <Link to="/" className="flex-shrink-0">
-            <img src="/logo.svg" alt="Receptje.be" className="h-8" />
-          </Link>
-        </div>
-      </header>
+      <Header fetcher={fetcher} />
 
       <main className="px-6 sm:px-10 text-slate-800">
         <div className="flex justify-between items-start mb-1">

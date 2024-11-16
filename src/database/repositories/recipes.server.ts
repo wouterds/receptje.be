@@ -20,9 +20,9 @@ const getById = async (id: string) => {
 
   return {
     ...recipe,
-    ingredients: JSON.parse(recipe.ingredients as string),
-    steps: JSON.parse(recipe.steps as string),
-    keywords: JSON.parse(recipe.keywords as string),
+    ingredients: JSON.parse(recipe.ingredients as string) as [Record<string, string>],
+    steps: JSON.parse(recipe.steps as string) as string[],
+    keywords: JSON.parse(recipe.keywords as string) as string[],
   };
 };
 

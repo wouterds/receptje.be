@@ -1,12 +1,11 @@
-import type { ActionFunctionArgs, LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
-import { Link, useFetcher } from '@remix-run/react';
-import clsx from 'clsx';
+import { LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
+import { useFetcher } from '@remix-run/react';
 import { LuClock, LuUser2 } from 'react-icons/lu';
 
-import { SearchRecipe } from '~/components/search-recipe';
-import { Users } from '~/database';
+import { Header } from '~/components/header';
 import { useUser } from '~/hooks';
-import { Cookies, OpenAI } from '~/services';
+
+import { action } from './search';
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   return {
@@ -31,24 +30,6 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
   ];
 };
 
-export const action = async ({ request }: ActionFunctionArgs) => {
-  const formData = await request.formData();
-  const q = formData.get('q') as string;
-  if (!q) {
-    throw new Response('Bad request', { status: 400 });
-  }
-
-  const userId = await Cookies.userId.parse(request.headers.get('cookie'));
-  const user = await Users.get(userId);
-  if (!user) {
-    throw new Response('Unauthorized', { status: 401 });
-  }
-
-  const recipe = await OpenAI.searchRecipe(q, userId);
-
-  return { recipe, q };
-};
-
 export default function Index() {
   useUser();
 
@@ -57,28 +38,7 @@ export default function Index() {
 
   return (
     <div className="flex flex-col w-full gap-6 sm:gap-8 py-6">
-      <header className="px-6 sm:px-10 flex justify-between items-center">
-        <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-8 flex-1">
-          <Link to="/" className="flex-shrink-0">
-            <img src="/logo.svg" alt="Receptje.be" className="h-8" />
-          </Link>
-          <SearchRecipe fetcher={fetcher} />
-        </div>
-        <nav className="text-sm font-semibold text-slate-800 flex-shrink-0 hidden">
-          <Link to="/mijn-receptjes" className="relative hover:text-slate-600 transition-colors">
-            Mijn receptjes
-            <span
-              className={clsx(
-                'absolute -right-4 -top-2.5 min-w-4 h-4 p-1 bg-rose-500 rounded-full text-rose-50 flex items-center justify-center text-[10px]',
-                {
-                  hidden: 0 === 0,
-                },
-              )}>
-              0
-            </span>
-          </Link>
-        </nav>
-      </header>
+      <Header fetcher={fetcher} />
       <main className="px-6 sm:px-10 text-slate-800">
         {data?.recipe && (
           <>

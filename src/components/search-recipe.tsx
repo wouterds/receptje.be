@@ -1,19 +1,29 @@
-import { FetcherWithComponents } from '@remix-run/react';
+import { FetcherWithComponents, useNavigate } from '@remix-run/react';
 import clsx from 'clsx';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
+
+import { action } from '~/routes/search';
 
 type Props = {
   defaultValue?: string;
-  fetcher: FetcherWithComponents<unknown>;
+  fetcher: FetcherWithComponents<Awaited<ReturnType<typeof action>>>;
 };
 
 export const SearchRecipe = ({ defaultValue, fetcher }: Props) => {
   const isLoading = fetcher.state === 'submitting';
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (fetcher.data?.recipe) {
+      navigate(`/recepten/${fetcher.data.recipe?.identifier}-${fetcher.data.recipe?.id}`);
+    }
+  }, [fetcher.data?.recipe, navigate]);
+
   return (
     <fetcher.Form
       method="post"
+      action="/search"
       className="flex items-center gap-3 sm:gap-4 w-full py-1"
       onSubmit={() => {
         inputRef.current?.blur();
