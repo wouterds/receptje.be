@@ -6,7 +6,7 @@ import { TbMenuDeep } from 'react-icons/tb';
 import { useMe } from '~/hooks';
 
 export const Header = () => {
-  const { recipes, user } = useMe();
+  const { recipes } = useMe();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const handleMouseEnter = () => {
