@@ -47,7 +47,7 @@ export default function RecipeDetail() {
     <div className="flex flex-col w-full gap-6 sm:gap-8 py-6">
       <Header />
 
-      <main className="px-6 sm:px-10 text-slate-800">
+      <main className="px-6 sm:px-10 text-black/80">
         <div className="flex justify-between items-start mb-1">
           <h1 className="text-xl font-semibold">{recipe.name}</h1>
         </div>

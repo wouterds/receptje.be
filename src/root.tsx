@@ -41,7 +41,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         <div className="flex flex-1 flex-col">{children}</div>
-        <footer className="text-slate-500 text-sm py-6 px-6 sm:px-10 flex items-center gap-1.5">
+        <footer className="text-black/50 text-sm py-6 px-6 sm:px-10 flex items-center gap-1.5">
           &copy; {new Date().getFullYear()} receptje.be, powered by gpt-4o-mini{' '}
           <SiOpenai className="text-base" />
         </footer>

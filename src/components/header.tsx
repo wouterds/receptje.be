@@ -16,8 +16,8 @@ export const Header = ({ autoFocus }: Props) => {
         </Link>
         <SearchRecipe autoFocus={autoFocus} />
       </div>
-      <nav className="text-sm font-semibold text-slate-800 flex-shrink-0 hidden">
-        <Link to="/mijn-receptjes" className="relative hover:text-slate-600 transition-colors">
+      <nav className="text-sm font-semibold text-black/80 flex-shrink-0 hidden">
+        <Link to="/mijn-receptjes" className="relative hover:text-black/60 transition-colors">
           Mijn receptjes
           <span
             className={clsx(

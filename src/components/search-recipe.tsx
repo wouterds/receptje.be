@@ -28,7 +28,7 @@ export const SearchRecipe = ({ autoFocus }: Props) => {
         ref={inputRef}
         type="text"
         name="q"
-        className="border rounded-full flex-1 text-sm max-w-xl px-4 py-2 sm:px-6 sm:py-3 bg-white/50 placeholder:text-black/50"
+        className="border border-black/10 rounded-full flex-1 text-black/80 text-sm max-w-xl px-4 py-2 sm:px-6 sm:py-3 bg-white/50 placeholder:text-black/50 hover:bg-white/70 hover:border-black/15 transition-colors"
         placeholder="Zoek een receptje"
         autoFocus={autoFocus}
         tabIndex={1}
