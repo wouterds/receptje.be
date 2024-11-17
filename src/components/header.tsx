@@ -52,9 +52,7 @@ export const Header = () => {
                   <div ref={scrollContainerRef} className="p-2 max-h-[70vh] overflow-y-auto">
                     {recipes.length === 0 ? (
                       <p className="text-xs text-black/60 p-3">
-                        Hoi! 👋
-                        <br />
-                        Hier kan je opgezochte recepten terugvinden!
+                        Hier kan je opgezochte recepten terugvinden.
                       </p>
                     ) : (
                       recipes.map((recipe) => (

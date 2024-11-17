@@ -1,5 +1,6 @@
 import { LoaderFunctionArgs, MetaFunction, redirect } from '@remix-run/node';
 import { Link, useLoaderData } from '@remix-run/react';
+import { TbClock, TbUsers } from 'react-icons/tb';
 
 import { Header } from '~/components/header';
 import { Recipes, Users } from '~/database';
@@ -54,8 +55,14 @@ export default function MyRecipes() {
                 </h2>
                 <p className="text-sm text-black/60 line-clamp-2">{recipe.description}</p>
                 <div className="flex gap-4 mt-1 text-sm text-black/60">
-                  <span>{recipe.portions} porties</span>
-                  <span>{recipe.preparationTime} minuten</span>
+                  <span className="flex items-center gap-1">
+                    <TbUsers className="text-rose-500 text-base" />
+                    <span className="font-medium">{recipe.portions}</span> porties
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <TbClock className="text-rose-500 text-base" />
+                    <span className="font-medium">{recipe.preparationTime}</span> minuten
+                  </span>
                 </div>
               </Link>
             ))}
