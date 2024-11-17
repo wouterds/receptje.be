@@ -37,7 +37,7 @@ const getByUserId = async (userId: string) => {
 };
 
 const deleteById = async (id: string) => {
-  await db.delete(Recipe).where(eq(Recipe.id, id));
+  await db.update(Recipe).set({ deletedAt: new Date() }).where(eq(Recipe.id, id));
 };
 
 const transformRecipe = (recipe: Recipe) => {
