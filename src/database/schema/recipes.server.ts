@@ -25,10 +25,12 @@ export const Recipe = mysqlTable(
     keywords: json('keywords').notNull(),
     createdAt: timestamp('created_at').notNull().defaultNow(),
     updatedAt: timestamp('updated_at').notNull().defaultNow().onUpdateNow(),
+    deletedAt: timestamp('deleted_at'),
   },
   (table) => ({
     userIdIdx: index('user_id_idx').on(table.userId),
     identifierIdx: index('identifier_idx').on(table.identifier),
     createdAtIdx: index('created_at_idx').on(table.createdAt),
+    deletedAtIdx: index('deleted_at_idx').on(table.deletedAt),
   }),
 );
