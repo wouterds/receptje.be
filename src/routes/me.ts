@@ -16,5 +16,14 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
   const recipes = await Recipes.getByUserId(user.id);
 
-  return Response.json({ user, recipes });
+  return Response.json({
+    user: {
+      ...user,
+      id: user.id.short,
+    },
+    recipes: recipes.map((recipe) => ({
+      ...recipe,
+      id: recipe.id.short,
+    })),
+  });
 };
