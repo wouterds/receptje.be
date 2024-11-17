@@ -1,6 +1,6 @@
 import crypto from 'node:crypto';
 
-import { eq } from 'drizzle-orm';
+import { desc, eq } from 'drizzle-orm';
 
 import { db, Recipe, RecipeData } from '~/database';
 
@@ -22,6 +22,19 @@ const getById = async (id?: string) => {
     return null;
   }
 
+  return transformRecipe(recipe);
+};
+
+const getByUserId = async (userId: string) => {
+  const recipes = await db.query.Recipe.findMany({
+    where: eq(Recipe.userId, userId?.toString()),
+    orderBy: [desc(Recipe.createdAt)],
+  });
+
+  return recipes.map(transformRecipe);
+};
+
+const transformRecipe = (recipe: Recipe) => {
   return {
     ...recipe,
     ingredients: JSON.parse(recipe.ingredients as string) as [Record<string, string>],
@@ -33,4 +46,5 @@ const getById = async (id?: string) => {
 export const Recipes = {
   add,
   getById,
+  getByUserId,
 };
