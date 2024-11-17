@@ -6,7 +6,7 @@ import { TbMenuDeep } from 'react-icons/tb';
 import { useMe } from '~/hooks';
 
 export const Header = () => {
-  const { recipes } = useMe();
+  const { recipes, user } = useMe();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const handleMouseEnter = () => {
@@ -26,18 +26,18 @@ export const Header = () => {
         <button className="-m-4 p-4 hover:opacity-80 sm:hidden peer">
           <TbMenuDeep className="w-6 h-6" />
         </button>
-        <div className="absolute right-0 pt-1 origin-top-right sm:relative sm:visible peer-hover:visible opacity-0 sm:opacity-100 peer-hover:opacity-100 transition-opacity text-nowrap hover:visible hover:opacity-100">
+        <div className="absolute right-0 pt-1 origin-top-right sm:relative sm:visible peer-hover:visible opacity-0 sm:opacity-100 peer-hover:opacity-100 transition-opacity hover:visible hover:opacity-100">
           <div className="rounded-lg p-1.5 sm:p-0 bg-[#FBFAFA] shadow-lg shadow-black/5 ring-1 ring-black/5 sm:bg-transparent sm:shadow-none sm:ring-0 flex flex-col sm:flex-row">
             <Link
               to="/"
-              className="px-4 py-2.5 sm:py-4 flex items-center gap-1.5 cursor-pointer mr-2 sm:mr-0 hover:opacity-80 transition-opacity">
+              className="px-4 py-2.5 sm:py-4 flex items-center gap-1.5 cursor-pointer mr-2 sm:mr-0 hover:opacity-80 transition-opacity text-nowrap">
               Zoeken
             </Link>
             <Link
               to="/mijn-recepten"
               className="group pr-2 sm:pr-0"
               onMouseEnter={handleMouseEnter}>
-              <div className="relative transition-opacity hover:opacity-80 px-4 py-2.5 sm:py-4 flex items-center gap-1.5 cursor-pointer">
+              <div className="relative transition-opacity hover:opacity-80 px-4 py-2.5 sm:py-4 flex items-center gap-1.5 cursor-pointer text-nowrap">
                 Mijn receptjes
                 <span
                   className={clsx(
@@ -52,7 +52,9 @@ export const Header = () => {
                   <div ref={scrollContainerRef} className="p-2 max-h-[70vh] overflow-y-auto">
                     {recipes.length === 0 ? (
                       <p className="text-xs text-black/60 p-3">
-                        Hoi 👋, hier zal je jouw opgezochte recepten later terug kunnen vinden.
+                        Hoi! 👋
+                        <br />
+                        Hier kan je opgezochte recepten terugvinden!
                       </p>
                     ) : (
                       recipes.map((recipe) => (
