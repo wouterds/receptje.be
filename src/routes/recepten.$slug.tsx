@@ -1,6 +1,6 @@
 import { json, LoaderFunctionArgs, MetaFunction, redirect } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
-import { LuClock, LuUser2 } from 'react-icons/lu';
+import { TbClock, TbUsers } from 'react-icons/tb';
 
 import { Header } from '~/components/header';
 import { Recipes } from '~/database';
@@ -48,27 +48,27 @@ export default function RecipeDetail() {
       <Header />
 
       <main className="px-6 sm:px-10 text-black/80">
-        <div className="flex justify-between items-start mb-1">
+        <div className="flex justify-between items-start mb-2">
           <h1 className="text-xl font-semibold">{recipe.name}</h1>
         </div>
 
-        <div className="flex gap-4 mb-3">
+        <div className="flex gap-4 mb-6">
           <p className="flex items-center gap-2">
-            <LuUser2 className="text-rose-500 text-lg" />
+            <TbUsers className="text-rose-500 text-lg" />
             <span>
               <span className="font-medium">{recipe.portions}</span>{' '}
               {recipe.portions === 1 ? 'portie' : 'porties'}
             </span>
           </p>
           <p className="flex items-center gap-2">
-            <LuClock className="text-rose-500 text-lg" />
+            <TbClock className="text-rose-500 text-lg" />
             <span>
               <span className="font-medium">{recipe.preparationTime}</span> minuten
             </span>
           </p>
         </div>
 
-        <div className="mb-4">
+        <div className="mb-6">
           <h2 className="font-semibold text-lg mb-2">Ingrediënten</h2>
           <ul className="space-y-2 list-disc list-inside">
             {recipe.ingredients.map((ingredient, index) => (
