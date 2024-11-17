@@ -1,6 +1,5 @@
 import { LoaderFunctionArgs, MetaFunction, redirect } from '@remix-run/node';
-import { Link, useLoaderData } from '@remix-run/react';
-import { TbClock, TbTrash, TbUsers } from 'react-icons/tb';
+import { useLoaderData } from '@remix-run/react';
 
 import { Header } from '~/components/header';
 import { Recipes, Users } from '~/database';
