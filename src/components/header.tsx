@@ -21,7 +21,7 @@ export const Header = ({ autoFocus }: Props) => {
   };
 
   return (
-    <header className="px-6 sm:px-10 flex justify-between items-center">
+    <header className="px-6 sm:px-10 flex justify-between items-center gap-8">
       <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-8 flex-1">
         <Link to="/" className="flex-shrink-0">
           <img src="/logo.svg" alt="Receptje.be" className="h-8" />
@@ -45,17 +45,25 @@ export const Header = ({ autoFocus }: Props) => {
           <div className="absolute right-0 pt-1 w-80 origin-top-right invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all">
             <div className="rounded-lg bg-[#FBFAFA] shadow-lg shadow-black/5 ring-1 ring-black/5 relative">
               <div ref={scrollContainerRef} className="p-2 max-h-[70vh] overflow-y-auto">
-                {recipes.map((recipe) => (
-                  <Link
-                    key={recipe.id}
-                    to={`/recepten/${recipe.identifier}-${recipe.id}`}
-                    className="flex flex-col gap-0.5 p-3 rounded-md hover:bg-tint group/item transition-colors">
-                    <span className="font-medium text-sm group-hover/item:text-rose-500 transition-colors">
-                      {recipe.name}
-                    </span>
-                    <span className="text-xs text-black/60 line-clamp-2">{recipe.description}</span>
-                  </Link>
-                ))}
+                {recipes.length === 0 ? (
+                  <p className="text-xs text-black/60 p-3">
+                    Hoi 👋, hier zal je jouw opgezochte recepten later terug kunnen vinden.
+                  </p>
+                ) : (
+                  recipes.map((recipe) => (
+                    <Link
+                      key={recipe.id}
+                      to={`/recepten/${recipe.identifier}-${recipe.id}`}
+                      className="flex flex-col gap-0.5 p-3 rounded-md hover:bg-tint group/item transition-colors">
+                      <span className="font-medium text-sm group-hover/item:text-rose-500 transition-colors">
+                        {recipe.name}
+                      </span>
+                      <span className="text-xs text-black/60 line-clamp-2">
+                        {recipe.description}
+                      </span>
+                    </Link>
+                  ))
+                )}
               </div>
               {recipes?.length > 3 && (
                 <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-white/50 to-transparent pointer-events-none rounded-b-lg" />
