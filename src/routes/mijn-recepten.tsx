@@ -39,10 +39,10 @@ export default function MyRecipes() {
       <Header />
 
       <main className="px-6 sm:px-10">
-        <h1 className="text-xl font-semibold mb-6 text-black/80">Mijn recepten</h1>
+        <h1 className="text-xl font-semibold mb-4 sm:mb-6 text-black/80">Mijn recepten</h1>
 
         {recipes.length === 0 ? (
-          <p className="text-black/60">Je hebt precies nog geen recepten opgezocht. 🥺</p>
+          <p className="text-black/80">Je hebt precies nog geen recepten opgezocht. 🥺</p>
         ) : (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {recipes.map((recipe) => (

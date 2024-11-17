@@ -8,11 +8,18 @@ import { useMe } from '~/hooks';
 export const Header = () => {
   const { recipes } = useMe();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   const handleMouseEnter = () => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollTop = 0;
     }
+  };
+
+  const handleItemClick = () => {
+    buttonRef.current?.blur();
+    menuRef.current?.blur();
   };
 
   return (
@@ -23,19 +30,23 @@ export const Header = () => {
         </Link>
       </div>
       <nav className="text-sm font-semibold text-black/80 flex-shrink-0 relative">
-        <button className="-m-4 p-4 hover:opacity-80 sm:hidden peer">
+        <button ref={buttonRef} className="-m-4 p-4 hover:opacity-80 sm:hidden peer">
           <TbMenuDeep className="w-6 h-6" />
         </button>
-        <div className="absolute right-0 pt-1 origin-top-right sm:relative sm:visible peer-hover:visible opacity-0 sm:opacity-100 peer-hover:opacity-100 transition-opacity hover:visible hover:opacity-100">
+        <div
+          className="absolute right-0 pt-1 origin-top-right sm:relative sm:visible peer-hover:visible opacity-0 sm:opacity-100 peer-hover:opacity-100 transition-opacity hover:visible hover:opacity-100 pointer-events-none peer-hover:pointer-events-auto hover:pointer-events-auto sm:pointer-events-auto"
+          ref={menuRef}>
           <div className="rounded-lg p-1.5 sm:p-0 bg-[#FBFAFA] shadow-lg shadow-black/5 ring-1 ring-black/5 sm:bg-transparent sm:shadow-none sm:ring-0 flex flex-col sm:flex-row">
             <Link
               to="/"
+              onClick={handleItemClick}
               className="px-4 py-2.5 sm:py-4 flex items-center gap-1.5 cursor-pointer mr-2 sm:mr-0 hover:opacity-80 transition-opacity text-nowrap">
               Zoeken
             </Link>
             <Link
               to="/mijn-recepten"
               className="group pr-2 sm:pr-0"
+              onClick={handleItemClick}
               onMouseEnter={handleMouseEnter}>
               <div className="relative transition-opacity hover:opacity-80 px-4 py-2.5 sm:py-4 flex items-center gap-1.5 cursor-pointer text-nowrap">
                 Mijn receptjes
@@ -59,6 +70,7 @@ export const Header = () => {
                         <Link
                           key={recipe.id}
                           to={`/recepten/${recipe.identifier}-${recipe.id}`}
+                          onClick={handleItemClick}
                           className="flex flex-col gap-0.5 p-3 rounded-md hover:bg-tint group/item transition-colors">
                           <span className="font-medium text-sm group-hover/item:text-rose-500 transition-colors">
                             {recipe.name}
