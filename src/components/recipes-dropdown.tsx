@@ -1,16 +1,9 @@
 import { Link } from '@remix-run/react';
-import { LuChevronDown } from 'react-icons/lu';
 
-type Props = {
-  recipes: {
-    id: string;
-    identifier: string;
-    name: string;
-    description: string;
-  }[];
-};
+import { useMe } from '~/hooks';
 
-export const RecipesDropdown = ({ recipes }: Props) => {
+export const RecipesDropdown = () => {
+  const { recipes } = useMe();
   if (!recipes.length) {
     return null;
   }
