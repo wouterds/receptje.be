@@ -1,6 +1,6 @@
 import crypto from 'node:crypto';
 
-import { desc, eq } from 'drizzle-orm';
+import { and, desc, eq, isNull } from 'drizzle-orm';
 
 import { db, Recipe, RecipeData } from '~/database';
 
@@ -17,7 +17,9 @@ const getById = async (id?: string) => {
     return null;
   }
 
-  const recipe = await db.query.Recipe.findFirst({ where: eq(Recipe.id, id) });
+  const recipe = await db.query.Recipe.findFirst({
+    where: and(eq(Recipe.id, id), isNull(Recipe.deletedAt)),
+  });
   if (!recipe) {
     return null;
   }
@@ -27,11 +29,15 @@ const getById = async (id?: string) => {
 
 const getByUserId = async (userId: string) => {
   const recipes = await db.query.Recipe.findMany({
-    where: eq(Recipe.userId, userId?.toString()),
+    where: and(eq(Recipe.userId, userId?.toString()), isNull(Recipe.deletedAt)),
     orderBy: [desc(Recipe.createdAt)],
   });
 
   return recipes.map(transformRecipe);
+};
+
+const deleteById = async (id: string) => {
+  await db.delete(Recipe).where(eq(Recipe.id, id));
 };
 
 const transformRecipe = (recipe: Recipe) => {
@@ -47,4 +53,5 @@ export const Recipes = {
   add,
   getById,
   getByUserId,
+  deleteById,
 };
