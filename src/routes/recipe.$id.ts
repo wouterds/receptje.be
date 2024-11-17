@@ -23,7 +23,7 @@ export const action = async ({ request, params }: ActionFunctionArgs) => {
     throw Response.json({ error: 'Not found' }, { status: 404 });
   }
 
-  if (recipe.userId !== user.id) {
+  if (recipe.userId.toString() !== user.id.toString()) {
     throw Response.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
