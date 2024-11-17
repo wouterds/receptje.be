@@ -5,11 +5,7 @@ import { useRef } from 'react';
 import { useUser } from '~/hooks';
 import { action } from '~/routes/search';
 
-type Props = {
-  autoFocus?: boolean;
-};
-
-export const SearchRecipe = ({ autoFocus }: Props) => {
+export const SearchRecipe = () => {
   useUser();
 
   const fetcher = useFetcher<typeof action>();
@@ -20,7 +16,7 @@ export const SearchRecipe = ({ autoFocus }: Props) => {
     <fetcher.Form
       method="post"
       action="/search"
-      className="flex items-center gap-3 sm:gap-4 w-full py-1"
+      className="flex items-center gap-3 sm:gap-4 w-full max-w-xl py-1"
       onSubmit={() => {
         inputRef.current?.blur();
       }}>
@@ -28,22 +24,24 @@ export const SearchRecipe = ({ autoFocus }: Props) => {
         ref={inputRef}
         type="text"
         name="q"
-        className="border border-black/10 rounded-full flex-1 text-black/80 text-sm max-w-xl px-4 py-2 sm:px-6 sm:py-3 bg-white/50 placeholder:text-black/50 hover:bg-white/70 hover:border-black/15 transition-colors"
+        className="border border-black/10 rounded-full flex-1 text-black/80 text-sm px-4 py-2 sm:px-6 sm:py-3 bg-white/50 placeholder:text-black/50 hover:bg-white/70 hover:border-black/15 transition-colors"
         placeholder="Zoek een receptje"
-        autoFocus={autoFocus}
+        autoFocus
         tabIndex={1}
         autoComplete="off"
       />
       <button
         tabIndex={2}
-        className="bg-rose-500 hover:bg-rose-600 transition-colors text-tint font-semibold text-sm rounded-full inline-block relative px-4 py-2 sm:px-6 sm:py-3"
-        type="submit">
-        <span
-          className={clsx({
-            'opacity-0': isLoading,
-          })}>
-          Zoek
-        </span>
+        className={clsx(
+          'bg-rose-500 transition-colors text-tint font-semibold text-sm rounded-full inline-block relative px-4 py-2 sm:px-6 sm:py-3',
+          {
+            'cursor-progress': isLoading,
+            'hover:bg-rose-600': !isLoading,
+          },
+        )}
+        type="submit"
+        disabled={isLoading}>
+        <span className={clsx({ 'opacity-0': isLoading })}>Zoek</span>
         {isLoading && (
           <div className="absolute inset-0 flex items-center justify-center">
             <svg

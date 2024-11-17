@@ -1,6 +1,7 @@
 import { LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
 
 import { Header } from '~/components/header';
+import { SearchRecipe } from '~/components/search-recipe';
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   return {
@@ -25,8 +26,11 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 
 export default function Index() {
   return (
-    <div className="flex flex-col w-full gap-6 sm:gap-8 py-6">
-      <Header autoFocus />
+    <div className="flex flex-col w-full gap-6 sm:gap-8 py-6 flex-1">
+      <Header />
+      <main className="px-6 sm:px-10 flex sm:flex-1 sm:justify-center sm:items-center sm:pb-[33vh]">
+        <SearchRecipe />
+      </main>
     </div>
   );
 }
