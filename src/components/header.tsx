@@ -49,7 +49,7 @@ export const Header = () => {
               onClick={handleItemClick}
               onMouseEnter={handleMouseEnter}>
               <div className="relative transition-opacity hover:opacity-80 px-4 py-2.5 sm:py-4 flex items-center gap-1.5 cursor-pointer text-nowrap">
-                Mijn receptjes
+                Mijn recepten
                 <span
                   className={clsx(
                     'absolute right-0 -top-1 sm:top-1 min-w-4 h-4 p-1 bg-rose-500 rounded-full text-rose-50 flex items-center justify-center text-[10px] font-medium',

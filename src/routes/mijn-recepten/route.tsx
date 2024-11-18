@@ -40,16 +40,28 @@ export default function MyRecipes() {
       <Header />
 
       <main className="px-6 sm:px-10">
-        <h1 className="text-xl font-semibold mb-4 sm:mb-6 text-black/80">Mijn recepten</h1>
-
         {recipes.length === 0 ? (
-          <p className="text-black/80">Je hebt precies nog geen recepten opgezocht. 🥺</p>
-        ) : (
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {recipes.map((recipe) => (
-              <Card key={recipe.id} recipe={recipe} />
-            ))}
+          <div className="max-w-lg m-12 mx-auto bg-white/50 border border-black/5 rounded-lg p-8">
+            <p className="text-black/60 text-center text-sm font-medium">
+              Je hebt precies nog geen recepten opgezocht.
+              <br />
+              <br />
+              <span className="opacity-80">
+                🥺
+                <br />
+                👉👈
+              </span>
+            </p>
           </div>
+        ) : (
+          <>
+            <h1 className="text-xl font-semibold mb-4 sm:mb-6 text-black/80">Mijn recepten</h1>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {recipes.map((recipe) => (
+                <Card key={recipe.id} recipe={recipe} />
+              ))}
+            </div>
+          </>
         )}
       </main>
     </div>
