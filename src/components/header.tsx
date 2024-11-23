@@ -30,8 +30,11 @@ export const Header = () => {
         </Link>
       </div>
       <nav className="text-sm font-semibold text-black/80 flex-shrink-0 relative">
-        <button ref={buttonRef} className="-m-4 p-4 hover:opacity-80 sm:hidden peer">
+        <button ref={buttonRef} className="-m-4 p-4 hover:opacity-80 sm:hidden peer relative">
           <TbMenuDeep className="w-6 h-6" />
+          {!!recipes.length && (
+            <span className="w-1.5 h-1.5 rounded-full bg-rose-500 absolute top-3 right-3" />
+          )}
         </button>
         <div
           className="absolute right-0 pt-1 origin-top-right sm:relative sm:visible peer-hover:visible opacity-0 sm:opacity-100 peer-hover:opacity-100 transition-opacity hover:visible hover:opacity-100 pointer-events-none peer-hover:pointer-events-auto hover:pointer-events-auto sm:pointer-events-auto"
