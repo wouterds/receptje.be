@@ -9,9 +9,14 @@ export const uuid = customType<{ data: string; driverData: Buffer }>({
     return `BINARY(16)`;
   },
 
+  // accepts both full length UUIDs and short UUIDs
   toDriver(value) {
     if (typeof value !== 'string') {
       return sql.raw('NULL');
+    }
+
+    if (value.length === 36) {
+      return sql.raw(`x'${value.replace(/-/g, '')}'`);
     }
 
     if (!validate(value)) {
