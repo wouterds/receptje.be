@@ -14,7 +14,6 @@ export const User = mysqlTable(
     id: uuid('id')
       .primaryKey()
       .$defaultFn(() => crypto.randomUUID()),
-    fingerprint: varchar('fingerprint', { length: 32 }).notNull(),
     firstName: varchar('first_name', { length: 64 }),
     lastName: varchar('last_name', { length: 64 }),
     email: varchar('email', { length: 128 }),
@@ -22,7 +21,6 @@ export const User = mysqlTable(
     updatedAt: timestamp('updated_at').notNull().defaultNow().onUpdateNow(),
   },
   (table) => ({
-    fingerprintIdx: index('fingerprint_idx').on(table.fingerprint),
     emailIdx: index('email_idx').on(table.email),
     createdAtIdx: index('created_at_idx').on(table.createdAt),
   }),

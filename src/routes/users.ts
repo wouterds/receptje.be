@@ -15,13 +15,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     }
   }
 
-  const data = await request.json();
-  const fingerprint = data.fingerprint as string;
-  if (fingerprint?.length !== 32) {
-    throw Response.json({ error: 'Bad request' }, { status: 400 });
-  }
-
-  const user = await Users.add({ fingerprint });
+  const user = await Users.add({});
   if (!user) {
     return Response.json({ error: 'Internal server error' }, { status: 500 });
   }
