@@ -13,7 +13,6 @@
     "db:migrate": "drizzle-kit migrate"
   },
   "dependencies": {
-    "@fingerprintjs/fingerprintjs": "^4.5.1",
     "@react-router/node": "^7.0.1",
     "@react-router/serve": "^7.0.1",
     "clsx": "^2.1.1",
