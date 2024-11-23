@@ -12,7 +12,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
     throw new Response('Recept niet gevonden', { status: 404 });
   }
 
-  const slug = `${recipe.identifier}-${recipe.id.short}`;
+  const slug = `${recipe.identifier}-${recipe.id}`;
   if (params.slug !== slug) {
     throw redirect(`/recepten/${slug}`);
   }

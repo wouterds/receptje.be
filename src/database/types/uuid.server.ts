@@ -1,16 +1,10 @@
 import { sql } from 'drizzle-orm';
 import { customType } from 'drizzle-orm/mysql-core';
 import ShortUuid from 'short-uuid';
-import { validate as validateUUID } from 'uuid';
 
-const shortUuid = ShortUuid();
+const { fromUUID, toUUID, validate } = ShortUuid();
 
-type UUID = string & {
-  short?: string;
-  toString: () => string;
-};
-
-export const uuid = customType<{ data: UUID; driverData: Buffer }>({
+export const uuid = customType<{ data: string; driverData: Buffer }>({
   dataType() {
     return `BINARY(16)`;
   },
@@ -20,25 +14,20 @@ export const uuid = customType<{ data: UUID; driverData: Buffer }>({
       return sql.raw('NULL');
     }
 
-    const uuid = shortUuid.validate(value) ? shortUuid.toUUID(value) : value;
-    if (!validateUUID(uuid)) {
+    if (!validate(value)) {
       return sql.raw('NULL');
     }
 
-    return sql.raw(`x'${uuid.replace(/-/g, '')}'`);
+    return sql.raw(`x'${toUUID(value).replace(/-/g, '')}'`);
   },
 
   fromDriver(value: Buffer) {
-    const uuid = new String(
-      value
-        .toString('hex')
-        .match(/.{2}/g)!
-        .join('')
-        .replace(/^(.{8})(.{4})(.{4})(.{4})(.{12})$/, '$1-$2-$3-$4-$5'),
-    );
+    const uuid = value
+      .toString('hex')
+      .match(/.{2}/g)!
+      .join('')
+      .replace(/^(.{8})(.{4})(.{4})(.{4})(.{12})$/, '$1-$2-$3-$4-$5');
 
-    Object.assign(uuid, { short: shortUuid.fromUUID(uuid.toString()) });
-
-    return uuid as UUID;
+    return fromUUID(uuid);
   },
 });

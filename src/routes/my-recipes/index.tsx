@@ -19,12 +19,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
   const recipes = await Recipes.getByUserId(user.id);
 
-  return {
-    recipes: recipes.map((recipe) => ({
-      ...recipe,
-      id: recipe.id.short!,
-    })),
-  };
+  return { recipes };
 };
 
 export const meta: MetaFunction<typeof loader> = () => {

@@ -84,7 +84,7 @@ export class OpenAI {
       preparationTime,
       ingredients,
       steps,
-      id: recipe!.id.short!,
+      id: `${recipe?.id}`,
     };
   }
 

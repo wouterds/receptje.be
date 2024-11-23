@@ -9,8 +9,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     const user = await Users.get(cookie.toString());
     if (user) {
       return Response.json(
-        { id: user.id.short },
-        { headers: { 'Set-Cookie': await Cookies.userId.serialize(user.id.short) } },
+        { id: user.id },
+        { headers: { 'Set-Cookie': await Cookies.userId.serialize(user.id) } },
       );
     }
   }
@@ -21,7 +21,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   }
 
   return Response.json(
-    { id: user.id.short },
-    { headers: { 'Set-Cookie': await Cookies.userId.serialize(user.id.short) } },
+    { id: user.id },
+    { headers: { 'Set-Cookie': await Cookies.userId.serialize(user.id) } },
   );
 };
