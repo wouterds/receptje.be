@@ -25,7 +25,7 @@ export const Card = ({ recipe }: Props) => {
 
     const minDuration = new Promise((resolve) => setTimeout(resolve, 600));
 
-    Promise.all([fetch(`/recipe/${recipe.id}`, { method: 'DELETE' }), minDuration]).then(
+    Promise.all([fetch(`/recipes/${recipe.id}`, { method: 'DELETE' }), minDuration]).then(
       revalidate,
     );
   };

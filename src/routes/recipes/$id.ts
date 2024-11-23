@@ -1,4 +1,4 @@
-import { type ActionFunctionArgs } from 'react-router';
+import { ActionFunctionArgs } from 'react-router';
 
 import { Recipes, Users } from '~/database';
 import { Cookies } from '~/services';
