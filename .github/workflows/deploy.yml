@@ -26,7 +26,6 @@ jobs:
       REGISTRY_USER: ${{ github.actor }}
       REGISTRY_PASS: ${{ github.token }}
       COMMIT_SHA: ${{ github.sha }}
-      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
     steps:
       - uses: actions/checkout@v4
       - uses: docker/login-action@v3
@@ -52,14 +51,10 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           build-args: |
             COMMIT_SHA=${{ env.COMMIT_SHA }}
-            SENTRY_AUTH_TOKEN=${{ env.SENTRY_AUTH_TOKEN }}
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    environment:
-      name: production
-      url: https://receptje.be
     env:
       HOST: ${{ secrets.CLOUDFLARE_TUNNEL }}
       USER: code

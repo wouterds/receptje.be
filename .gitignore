@@ -1,10 +1,7 @@
-node_modules
-
-.DS_Store
-
-/.cache
-/build
 .env
-
-# Sentry Config File
-.env.sentry-build-plugin
+!.env.example
+.DS_Store
+.react-router
+build
+node_modules
+*.tsbuildinfo

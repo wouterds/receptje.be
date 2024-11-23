@@ -1,4 +1,4 @@
-import { LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
+import { LoaderFunctionArgs, MetaFunction } from 'react-router';
 
 import { Header } from '~/components/header';
 import { SearchRecipe } from '~/components/search-recipe';

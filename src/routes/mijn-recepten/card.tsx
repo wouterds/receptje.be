@@ -1,7 +1,7 @@
-import { Link, useRevalidator } from '@remix-run/react';
 import clsx from 'clsx';
 import { MouseEvent, useState } from 'react';
 import { TbClock, TbTrash, TbUsers } from 'react-icons/tb';
+import { Link, useRevalidator } from 'react-router';
 
 import { Recipe } from '~/database';
 

@@ -1,4 +1,3 @@
-import { captureMessage } from '@sentry/remix';
 import OpenAILib from 'openai';
 
 import { AICompletions, Recipes } from '~/database';
@@ -9,7 +8,6 @@ export class OpenAI {
   static async searchRecipe(prompt: string, userId: string): Promise<Recipe | null> {
     if (prompt.length < 4) {
       console.error('Prompt is too short');
-      captureMessage('Prompt is too short', { extra: { prompt } });
       return null;
     }
 
@@ -46,7 +44,6 @@ export class OpenAI {
 
     if (!completion.choices[0].message.content) {
       console.error('No content returned from OpenAI');
-      captureMessage('No content returned from OpenAI', { extra: { prompt, completion } });
       return null;
     }
 
@@ -59,10 +56,6 @@ export class OpenAI {
       if (process.env.NODE_ENV !== 'production') {
         console.error(response);
       }
-
-      captureMessage('Invalid recipe format returned from OpenAI', {
-        extra: { prompt, completion, response },
-      });
       return null;
     }
 

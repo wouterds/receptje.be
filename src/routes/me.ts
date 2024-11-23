@@ -1,4 +1,4 @@
-import { LoaderFunctionArgs } from '@remix-run/node';
+import { LoaderFunctionArgs } from 'react-router';
 
 import { Recipes, Users } from '~/database';
 import { Cookies } from '~/services';

@@ -1,7 +1,7 @@
-import { Link } from '@remix-run/react';
 import clsx from 'clsx';
 import { useRef } from 'react';
 import { TbMenuDeep } from 'react-icons/tb';
+import { Link } from 'react-router';
 
 import { useMe } from '~/hooks';
 

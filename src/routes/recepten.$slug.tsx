@@ -1,6 +1,6 @@
-import { json, LoaderFunctionArgs, MetaFunction, redirect } from '@remix-run/node';
-import { useLoaderData } from '@remix-run/react';
 import { TbClock, TbUsers } from 'react-icons/tb';
+import { data, LoaderFunctionArgs, MetaFunction, redirect } from 'react-router';
+import { useLoaderData } from 'react-router';
 
 import { Header } from '~/components/header';
 import { Recipes } from '~/database';
@@ -17,7 +17,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
     throw redirect(`/recepten/${slug}`);
   }
 
-  return json({ recipe, url: request.url });
+  return data({ recipe, url: request.url });
 };
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {

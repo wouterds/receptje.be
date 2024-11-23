@@ -1,6 +1,7 @@
-import './tailwind.css';
+import './main.css';
 
-import type { LinksFunction } from '@remix-run/node';
+import { ReactNode } from 'react';
+import { SiOpenai } from 'react-icons/si';
 import {
   isRouteErrorResponse,
   Links,
@@ -8,12 +9,11 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useRouteError,
-} from '@remix-run/react';
-import { captureRemixErrorBoundaryError, withSentry } from '@sentry/remix';
-import { SiOpenai } from 'react-icons/si';
+} from 'react-router';
 
-export const links: LinksFunction = () => [
+import type { Route } from './+types/root';
+
+export const links: Route.LinksFunction = () => [
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
   {
     rel: 'preconnect',
@@ -26,9 +26,9 @@ export const links: LinksFunction = () => [
   },
 ];
 
-export function Layout({ children }: { children: React.ReactNode }) {
+export function Layout({ children }: { children: ReactNode }) {
   return (
-    <html lang="nl-BE">
+    <html lang="en">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -50,33 +50,40 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <script
           defer
           src="https://cloud.umami.is/script.js"
-          data-website-id="db631045-faaf-4fcf-a74b-4e979e9e4791"></script>
+          data-website-id="db631045-faaf-4fcf-a74b-4e979e9e4791"
+        />
       </body>
     </html>
   );
 }
 
-export const ErrorBoundary = () => {
-  const error = useRouteError();
+export default function App() {
+  return <Outlet />;
+}
 
-  captureRemixErrorBoundaryError(error);
-
-  let heading = 'Oeps, er is iets misgegaan';
-  let message = 'Er is een onverwachte fout opgetreden. Probeer het later opnieuw.';
+export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
+  let message = 'Oops!';
+  let details = 'An unexpected error occurred.';
+  let stack: string | undefined;
 
   if (isRouteErrorResponse(error)) {
-    heading = `${error.status} ${error.statusText}`;
-    message = error.data;
-  } else if (error instanceof Error) {
-    message = error.message;
+    message = error.status === 404 ? '404' : 'Error';
+    details =
+      error.status === 404 ? 'The requested page could not be found.' : error.statusText || details;
+  } else if (import.meta.env.DEV && error && error instanceof Error) {
+    details = error.message;
+    stack = error.stack;
   }
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">{heading}</h1>
-      <p className="text-gray-600 text-center max-w-md">{message}</p>
-    </div>
+    <main className="pt-16 p-4 container mx-auto">
+      <h1>{message}</h1>
+      <p>{details}</p>
+      {stack && (
+        <pre className="w-full p-4 overflow-x-auto">
+          <code>{stack}</code>
+        </pre>
+      )}
+    </main>
   );
-};
-
-export default withSentry(() => <Outlet />, { wrapWithErrorBoundary: false });
+}

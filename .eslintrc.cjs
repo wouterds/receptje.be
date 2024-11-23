@@ -11,11 +11,7 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'prettier',
   ],
-  plugins: [
-    '@typescript-eslint',
-    'simple-import-sort',
-    'prettier',
-  ],
+  plugins: ['@typescript-eslint', 'simple-import-sort', 'prettier'],
   settings: {
     react: {
       version: 'detect',
@@ -27,10 +23,9 @@ module.exports = {
     es6: true,
   },
   rules: {
-    'react/react-in-jsx-scope': 'off',
     '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
     'simple-import-sort/imports': 'error',
     'simple-import-sort/exports': 'error',
-    'no-duplicate-imports': 'error',
+    'react/react-in-jsx-scope': 'off',
   },
 };

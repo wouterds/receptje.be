@@ -1,6 +1,6 @@
-import { useFetcher } from '@remix-run/react';
 import clsx from 'clsx';
 import { useRef } from 'react';
+import { useFetcher } from 'react-router';
 
 import { useUser } from '~/hooks';
 import { action } from '~/routes/search';

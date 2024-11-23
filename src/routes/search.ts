@@ -1,4 +1,4 @@
-import { type ActionFunctionArgs, redirect } from '@remix-run/node';
+import { type ActionFunctionArgs, redirect } from 'react-router';
 
 import { Users } from '~/database';
 import { Cookies, OpenAI } from '~/services';
