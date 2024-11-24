@@ -1,4 +1,4 @@
-import { IconClock, IconUsers } from '@tabler/icons-react';
+import { IconClock, IconShare, IconUsers } from '@tabler/icons-react';
 import { data, LoaderFunctionArgs, MetaFunction, redirect } from 'react-router';
 import { useLoaderData } from 'react-router';
 
@@ -41,16 +41,30 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 };
 
 export default function RecipeDetail() {
-  const { recipe } = useLoaderData<typeof loader>();
+  const { recipe, url } = useLoaderData<typeof loader>();
 
   return (
     <div className="flex flex-col w-full gap-6 sm:gap-8 py-6">
       <Header />
 
       <main className="px-6 sm:px-10 text-black/80">
-        <div className="max-w-xl sm:my-6 mx-auto bg-white/50 border border-black/5 rounded-lg p-8">
+        <div className="max-w-xl sm:my-6 mx-auto bg-white/50 border border-black/5 rounded-lg p-6 sm:p-8 relative group">
           <div className="flex justify-between items-start mb-2">
             <h1 className="text-xl font-semibold">{recipe.name}</h1>
+            {typeof window !== 'undefined' && typeof navigator?.share === 'function' && (
+              <button
+                onClick={() =>
+                  navigator.share({
+                    title: recipe.name,
+                    text: recipe.description,
+                    url: url,
+                  })
+                }
+                className="text-black/70 rounded transition-all px-2.5 py-1.5 -my-0.5 bg-tint hover:bg-tint-dark text-sm inline-flex items-center gap-1.5 invisible group-hover:visible opacity-0 group-hover:opacity-100 focus:visible focus:opacity-100">
+                <IconShare className="w-4 h-4" />
+                Delen
+              </button>
+            )}
           </div>
 
           <div className="flex gap-4 mb-6">
