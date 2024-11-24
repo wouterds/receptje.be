@@ -1,5 +1,7 @@
 import crypto from 'node:crypto';
 
+import { eq } from 'drizzle-orm';
+
 import { AICompletion, AICompletionData, db } from '~/database';
 
 const add = async (data: AICompletionData) => {
@@ -10,6 +12,11 @@ const add = async (data: AICompletionData) => {
   return id;
 };
 
+const update = async (id: string, data: Partial<AICompletionData>) => {
+  await db.update(AICompletion).set(data).where(eq(AICompletion.id, id));
+};
+
 export const AICompletions = {
   add,
+  update,
 };

@@ -47,7 +47,11 @@ export class OpenAI {
       return null;
     }
 
-    await AICompletions.add({ userId, prompt, response: JSON.stringify(completion) });
+    const aiCompletionId = await AICompletions.add({
+      userId,
+      prompt,
+      response: JSON.stringify(completion),
+    });
 
     const response = JSON.parse(completion.choices[0].message.content as string);
 
@@ -77,6 +81,8 @@ export class OpenAI {
       steps,
     });
 
+    await AICompletions.update(aiCompletionId, { recipeId: recipe!.id });
+
     return {
       ...response,
       keywords,
@@ -84,7 +90,7 @@ export class OpenAI {
       preparationTime,
       ingredients,
       steps,
-      id: `${recipe?.id}`,
+      id: recipe!.id,
     };
   }
 

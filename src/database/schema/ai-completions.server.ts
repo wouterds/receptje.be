@@ -15,6 +15,7 @@ export const AICompletion = mysqlTable(
       .primaryKey()
       .$defaultFn(() => crypto.randomUUID()),
     userId: uuid('user_id').notNull(),
+    recipeId: uuid('recipe_id'),
     prompt: varchar('prompt', { length: 128 }).notNull(),
     response: text('response').notNull(),
     createdAt: timestamp('created_at').notNull().defaultNow(),
@@ -22,6 +23,7 @@ export const AICompletion = mysqlTable(
   },
   (table) => ({
     userIdIdx: index('user_id_idx').on(table.userId),
+    recipeIdIdx: index('recipe_id_idx').on(table.recipeId),
     promptIdx: index('prompt_idx').on(table.prompt),
     createdAtIdx: index('created_at_idx').on(table.createdAt),
   }),
