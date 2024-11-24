@@ -1,3 +1,4 @@
+import { IconMoodEmpty } from '@tabler/icons-react';
 import { LoaderFunctionArgs, MetaFunction, redirect, useLoaderData } from 'react-router';
 
 import { Header } from '~/components/header';
@@ -39,12 +40,7 @@ export default function MyRecipes() {
             <p className="text-black/60 text-center text-sm font-medium">
               Je hebt precies nog geen recepten opgezocht.
               <br />
-              <br />
-              <span className="opacity-80">
-                🥺
-                <br />
-                👉👈
-              </span>
+              <IconMoodEmpty className="opacity-50 text-center mx-auto mt-4" />
             </p>
           </div>
         ) : (
