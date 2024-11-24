@@ -56,7 +56,6 @@ export default function RecipeDetail() {
                 onClick={() =>
                   navigator.share({
                     title: recipe.name,
-                    text: recipe.description,
                     url: url,
                   })
                 }
