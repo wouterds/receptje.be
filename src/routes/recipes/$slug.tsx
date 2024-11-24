@@ -1,4 +1,4 @@
-import { TbClock, TbUsers } from 'react-icons/tb';
+import { Clock, Users } from 'lucide-react';
 import { data, LoaderFunctionArgs, MetaFunction, redirect } from 'react-router';
 import { useLoaderData } from 'react-router';
 
@@ -54,14 +54,14 @@ export default function RecipeDetail() {
 
         <div className="flex gap-4 mb-6">
           <p className="flex items-center gap-2">
-            <TbUsers className="text-rose-500 text-lg" />
+            <Users className="text-rose-500 h-5" />
             <span>
               <span className="font-medium">{recipe.portions}</span>{' '}
               {recipe.portions === 1 ? 'portie' : 'porties'}
             </span>
           </p>
           <p className="flex items-center gap-2">
-            <TbClock className="text-rose-500 text-lg" />
+            <Clock className="text-rose-500 h-5" />
             <span>
               <span className="font-medium">{recipe.preparationTime}</span> minuten
             </span>

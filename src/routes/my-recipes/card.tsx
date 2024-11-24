@@ -1,6 +1,6 @@
 import clsx from 'clsx';
+import { Clock, Trash2, Users } from 'lucide-react';
 import { MouseEvent, useState } from 'react';
-import { TbClock, TbTrash, TbUsers } from 'react-icons/tb';
 import { Link, useRevalidator } from 'react-router';
 
 import { Recipe } from '~/database';
@@ -43,7 +43,7 @@ export const Card = ({ recipe }: Props) => {
             'bg-tint': isDeleting,
           },
         )}>
-        <TbTrash
+        <Trash2
           className={clsx('w-4 h-4', {
             'opacity-50 group-hover/button:opacity-70': !isDeleting,
             'opacity-0': isDeleting,
@@ -77,11 +77,11 @@ export const Card = ({ recipe }: Props) => {
       <p className="text-sm text-black/60 line-clamp-2">{recipe.description}</p>
       <div className="flex gap-4 mt-1 text-sm text-black/60">
         <span className="flex items-center gap-1">
-          <TbUsers className="text-rose-500 text-base" />
+          <Users className="text-rose-500 h-4" />
           <span className="font-medium">{recipe.portions}</span> porties
         </span>
         <span className="flex items-center gap-1">
-          <TbClock className="text-rose-500 text-base" />
+          <Clock className="text-rose-500 h-4" />
           <span className="font-medium">{recipe.preparationTime}</span> minuten
         </span>
       </div>
