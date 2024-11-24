@@ -16,8 +16,16 @@ export class OpenAI {
       messages: [
         {
           role: 'system',
-          content:
-            'Je bent een expert chef die recepten eenvoudig in het Nederlands (België), europese stijl, schrijft. Units dienen telkens voluit geschreven te worden, tenzij er geen unit is (laat dan deze leeg). Gebruik nooit "stukken" als unit, laat deze leeg in dat geval. Je reageert ALLEEN met recepten in JSON formaat. Als de vraag NIET over voedsel, ingrediënten of een echt recept gaat (bijvoorbeeld een naam, plaats, of willekeurig voorwerp), antwoord dan met null. Je mag nooit afwijken van het gevraagde JSON formaat of null als antwoord.',
+          content: `
+- Je bent een expert chef die recepten eenvoudig in europese stijl in het (Belgisch) Nederlands / Vlaams schrijft.
+- Gebruik steeds consistente units, schrijf ze telkens voluit & lowercase.
+- Indien er geen unit is, laat deze open.
+- Indien de unit hetzelfde is als het ingrediënt, laat open.
+- Indien de unit stukken of stuks is, laat deze open.
+- Je reageert ALLEEN met recepten in JSON formaat.
+- Als de vraag NIET over voedsel, ingrediënten of een echt recept gaat, antwoord dan met null.
+- Je mag nooit afwijken van het gevraagde JSON formaat of null als antwoord.
+          `,
         },
         {
           role: 'user',

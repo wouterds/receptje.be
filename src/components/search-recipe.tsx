@@ -6,11 +6,11 @@ import { useUser } from '~/hooks';
 import { action } from '~/routes/search';
 
 const SUGGESTIONS = [
+  'Flatbread (griekse yoghurt) voor 2',
   'Moscow Mule',
-  'Zweedse kladdkaka',
-  'Yoghurt flatbread voor 2',
-  'Pannekoeken 1 ei',
   'Ragù',
+  'Zweedse kladdkaka',
+  'Pannekoeken 1 ei',
   'Vegi lasagne met feta 4 personen',
 ];
 
