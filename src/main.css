@@ -11,4 +11,5 @@ body {
 body {
   @apply h-auto;
   @apply flex flex-col w-full;
+  @apply gap-6 sm:gap-8 py-6 flex-1;
 }

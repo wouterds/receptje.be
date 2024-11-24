@@ -1,5 +1,6 @@
 import './main.css';
 
+import { IconMoodWrrr } from '@tabler/icons-react';
 import { ReactNode } from 'react';
 import {
   isRouteErrorResponse,
@@ -11,6 +12,7 @@ import {
 } from 'react-router';
 
 import type { Route } from './+types/root';
+import { Header } from './components/header';
 
 export const links: Route.LinksFunction = () => [
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
@@ -39,8 +41,9 @@ export function Layout({ children }: { children: ReactNode }) {
         <Links />
       </head>
       <body>
-        <div className="flex flex-1 flex-col">{children}</div>
-        <footer className="text-black/50 text-sm pb-6 px-6 sm:px-10 flex items-center gap-1.5">
+        <Header />
+        <main className="flex flex-1 flex-col px-6 sm:px-10 text-black/80">{children}</main>
+        <footer className="text-black/50 text-sm px-6 sm:px-10 flex items-center gap-1.5">
           &copy; {new Date().getFullYear()} receptje.be
         </footer>
         <ScrollRestoration />
@@ -60,8 +63,8 @@ export default function App() {
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
-  let message = 'Oops!';
-  let details = 'An unexpected error occurred.';
+  let message = '';
+  let details = '';
   let stack: string | undefined;
 
   if (isRouteErrorResponse(error)) {
@@ -73,15 +76,22 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
     stack = error.stack;
   }
 
+  console.error(message, details, stack);
+
   return (
-    <main className="pt-16 p-4 container mx-auto">
-      <h1>{message}</h1>
-      <p>{details}</p>
-      {stack && (
-        <pre className="w-full p-4 overflow-x-auto">
-          <code>{stack}</code>
-        </pre>
-      )}
-    </main>
+    <div className="max-w-lg m-12 mx-auto bg-white/50 border border-black/5 rounded-lg p-8">
+      <h1 className="text-xl font-semibold mb-4 sm:mb-6 text-black/80">
+        Oops something went wrong!
+      </h1>
+      <p className="text-black/60 text-center text-sm font-medium">
+        {details && (
+          <>
+            {details}
+            <br />
+          </>
+        )}
+        <IconMoodWrrr className="opacity-50 text-center mx-auto mt-4" />
+      </p>
+    </div>
   );
 }
