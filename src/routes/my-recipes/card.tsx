@@ -1,5 +1,5 @@
+import { IconClock, IconTrashX, IconUsers } from '@tabler/icons-react';
 import clsx from 'clsx';
-import { Clock, Trash2, Users } from 'lucide-react';
 import { MouseEvent, useState } from 'react';
 import { Link, useRevalidator } from 'react-router';
 
@@ -43,7 +43,7 @@ export const Card = ({ recipe }: Props) => {
             'bg-tint': isDeleting,
           },
         )}>
-        <Trash2
+        <IconTrashX
           className={clsx('w-4 h-4', {
             'opacity-50 group-hover/button:opacity-70': !isDeleting,
             'opacity-0': isDeleting,
@@ -77,11 +77,11 @@ export const Card = ({ recipe }: Props) => {
       <p className="text-sm text-black/60 line-clamp-2">{recipe.description}</p>
       <div className="flex gap-4 mt-1 text-sm text-black/60">
         <span className="flex items-center gap-1">
-          <Users className="text-rose-500 h-4" />
+          <IconUsers className="text-rose-500 h-4 w-4" />
           <span className="font-medium">{recipe.portions}</span> porties
         </span>
         <span className="flex items-center gap-1">
-          <Clock className="text-rose-500 h-4" />
+          <IconClock className="text-rose-500 h-4 w-4" />
           <span className="font-medium">{recipe.preparationTime}</span> minuten
         </span>
       </div>

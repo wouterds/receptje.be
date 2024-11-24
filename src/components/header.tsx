@@ -1,5 +1,5 @@
+import { IconMenuDeep } from '@tabler/icons-react';
 import clsx from 'clsx';
-import { Menu } from 'lucide-react';
 import { useRef } from 'react';
 import { Link } from 'react-router';
 
@@ -31,7 +31,7 @@ export const Header = () => {
       </div>
       <nav className="text-sm font-semibold text-black/80 flex-shrink-0 relative">
         <button ref={buttonRef} className="-m-4 p-4 hover:opacity-80 sm:hidden peer relative">
-          <Menu className="w-6 h-6" />
+          <IconMenuDeep className="h-6 w-6" />
           {!!recipes.length && (
             <span className="w-1.5 h-1.5 rounded-full bg-rose-500 absolute top-3 right-3" />
           )}

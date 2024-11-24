@@ -1,4 +1,4 @@
-import { Clock, Users } from 'lucide-react';
+import { IconClock, IconUsers } from '@tabler/icons-react';
 import { data, LoaderFunctionArgs, MetaFunction, redirect } from 'react-router';
 import { useLoaderData } from 'react-router';
 
@@ -54,14 +54,14 @@ export default function RecipeDetail() {
 
         <div className="flex gap-4 mb-6">
           <p className="flex items-center gap-2">
-            <Users className="text-rose-500 h-5" />
+            <IconUsers className="text-rose-500 h-5 w-5" />
             <span>
               <span className="font-medium">{recipe.portions}</span>{' '}
               {recipe.portions === 1 ? 'portie' : 'porties'}
             </span>
           </p>
           <p className="flex items-center gap-2">
-            <Clock className="text-rose-500 h-5" />
+            <IconClock className="text-rose-500 h-5 w-5" />
             <span>
               <span className="font-medium">{recipe.preparationTime}</span> minuten
             </span>
