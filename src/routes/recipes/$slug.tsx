@@ -48,50 +48,52 @@ export default function RecipeDetail() {
       <Header />
 
       <main className="px-6 sm:px-10 text-black/80">
-        <div className="flex justify-between items-start mb-2">
-          <h1 className="text-xl font-semibold">{recipe.name}</h1>
-        </div>
+        <div className="max-w-xl sm:my-6 mx-auto bg-white/50 border border-black/5 rounded-lg p-8">
+          <div className="flex justify-between items-start mb-2">
+            <h1 className="text-xl font-semibold">{recipe.name}</h1>
+          </div>
 
-        <div className="flex gap-4 mb-6">
-          <p className="flex items-center gap-2">
-            <IconUsers className="text-rose-500 h-5 w-5" />
-            <span>
-              <span className="font-medium">{recipe.portions}</span>{' '}
-              {recipe.portions === 1 ? 'portie' : 'porties'}
-            </span>
-          </p>
-          <p className="flex items-center gap-2">
-            <IconClock className="text-rose-500 h-5 w-5" />
-            <span>
-              <span className="font-medium">{recipe.preparationTime}</span> minuten
-            </span>
-          </p>
-        </div>
+          <div className="flex gap-4 mb-6">
+            <p className="flex items-center gap-2">
+              <IconUsers className="text-rose-500 h-5 w-5" />
+              <span>
+                <span className="font-medium">{recipe.portions}</span>{' '}
+                {recipe.portions === 1 ? 'portie' : 'porties'}
+              </span>
+            </p>
+            <p className="flex items-center gap-2">
+              <IconClock className="text-rose-500 h-5 w-5" />
+              <span>
+                <span className="font-medium">{recipe.preparationTime}</span> minuten
+              </span>
+            </p>
+          </div>
 
-        <div className="mb-6">
-          <h2 className="font-semibold text-lg mb-2">Ingrediënten</h2>
-          <ul className="space-y-2 list-disc list-inside">
-            {recipe.ingredients.map((ingredient, index) => (
-              <li key={index} className="marker:text-rose-500">
-                <span className="font-medium">
-                  {ingredient.amount} {ingredient.unit}
-                </span>{' '}
-                <span>{ingredient.description}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
+          <div className="mb-6">
+            <h2 className="font-semibold text-lg mb-2">Ingrediënten</h2>
+            <ul className="space-y-2 list-disc list-inside">
+              {recipe.ingredients.map((ingredient, index) => (
+                <li key={index} className="marker:text-rose-500">
+                  <span className="font-medium">
+                    {ingredient.amount} {ingredient.unit}
+                  </span>{' '}
+                  <span>{ingredient.description}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-        <div>
-          <h2 className="font-bold text-lg mb-2">Bereiding</h2>
-          <ol className="space-y-3">
-            {recipe.steps.map((step, index) => (
-              <li key={index} className="flex gap-3">
-                <span className="font-medium text-rose-500">{index + 1}.</span>
-                <span>{step}</span>
-              </li>
-            ))}
-          </ol>
+          <div>
+            <h2 className="font-bold text-lg mb-2">Bereiding</h2>
+            <ol className="space-y-3">
+              {recipe.steps.map((step, index) => (
+                <li key={index} className="flex gap-3">
+                  <span className="font-medium text-rose-500">{index + 1}.</span>
+                  <span>{step}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
         </div>
       </main>
     </div>
