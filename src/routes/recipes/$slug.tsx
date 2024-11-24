@@ -60,7 +60,7 @@ export default function RecipeDetail() {
                     url: url,
                   })
                 }
-                className="text-black/70 rounded transition-all px-2.5 py-1.5 -my-0.5 bg-tint hover:bg-tint-dark text-sm inline-flex items-center gap-1.5 invisible group-hover:visible opacity-0 group-hover:opacity-100 focus:visible focus:opacity-100">
+                className="text-black/70 rounded transition-all px-2.5 py-1.5 -my-0.5 bg-tint hover:bg-tint-dark text-sm items-center gap-1.5 invisible group-hover:visible opacity-0 group-hover:opacity-100 focus:visible focus:opacity-100 hidden sm:inline-flex">
                 <IconShare className="w-4 h-4" />
                 Delen
               </button>
