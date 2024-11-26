@@ -2,7 +2,9 @@ import './main.css';
 
 import { IconMoodWrrr } from '@tabler/icons-react';
 import countries from 'i18n-iso-countries';
+import i18next from 'i18next';
 import { ReactNode } from 'react';
+import { initReactI18next } from 'react-i18next';
 import {
   isRouteErrorResponse,
   Links,
@@ -17,6 +19,15 @@ import type { Route } from './+types/root';
 import { Footer } from './components/footer';
 import { Header } from './components/header';
 
+i18next.use(initReactI18next).init({
+  resources: {
+    en: { translation: await import('translations/en.json') },
+    nl: { translation: await import('translations/nl.json') },
+  },
+  lng: 'nl',
+  fallbackLng: 'en',
+});
+
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const locale = request.headers.get('Accept-Language')?.split('-')[0] || 'en';
   const countryCode = request.headers.get('CF-IPCountry')!;
@@ -29,6 +40,10 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   request.headers.forEach((value, key) => {
     headers[key] = value;
   });
+
+  if (!['NL', 'BE'].includes(countryCode) && locale !== 'nl') {
+    await i18next.changeLanguage('en');
+  }
 
   return {
     locale,

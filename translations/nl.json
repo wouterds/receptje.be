@@ -1,0 +1,8 @@
+{
+  "components": {
+    "search": {
+      "placeholder": "Zoek een receptje",
+      "button": "Zoek"
+    }
+  }
+}

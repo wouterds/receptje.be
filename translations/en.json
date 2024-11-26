@@ -1,0 +1,8 @@
+{
+  "components": {
+    "search": {
+      "placeholder": "Search for a recipe",
+      "button": "Search"
+    }
+  }
+}
