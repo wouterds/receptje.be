@@ -1,5 +1,7 @@
 import clsx from 'clsx';
+import i18next from 'i18next';
 import { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useFetcher } from 'react-router';
 
 import { useUser } from '~/hooks';
@@ -14,8 +16,11 @@ const SUGGESTIONS = [
   'Vegi lasagne met feta 4 personen',
 ];
 
-export const SearchRecipe = () => {
+export const Search = () => {
   useUser();
+
+  const { t } = useTranslation();
+
   const [query, setQuery] = useState('');
   const fetcher = useFetcher<typeof action>();
   const isLoading = fetcher.state === 'submitting';
@@ -55,7 +60,7 @@ export const SearchRecipe = () => {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           className="border border-black/10 rounded-full flex-1 text-black/80 text-sm px-4 py-2 sm:px-6 sm:py-3 bg-white/50 placeholder:text-black/50 hover:bg-white/70 hover:border-black/15 transition-colors"
-          placeholder="Zoek een receptje"
+          placeholder={t('components.search.placeholder')}
           autoFocus
           tabIndex={1}
           autoComplete="off"
@@ -71,7 +76,7 @@ export const SearchRecipe = () => {
           )}
           type="submit"
           disabled={isLoading}>
-          <span className={clsx({ 'opacity-0': isLoading })}>Zoek</span>
+          <span className={clsx({ 'opacity-0': isLoading })}>{t('components.search.button')}</span>
           {isLoading && (
             <div className="absolute inset-0 flex items-center justify-center">
               <svg

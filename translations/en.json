@@ -3,6 +3,15 @@
     "search": {
       "placeholder": "Search for a recipe",
       "button": "Search"
+    },
+    "header": {
+      "search": "Search",
+      "my-recipes": "My recipes",
+      "my-recipes-empty": "Here you will find your searched recipes.",
+      "foreign-visitor": "We've noticed you're visiting from {{country}} {{flag}}. While this website is primarily aimed at a Belgian (Dutch speaking) audience, we'll do our best to make things work for you! ✌️"
+    },
+    "footer": {
+      "copyright": "© {{year}} receptje.be"
     }
   }
 }

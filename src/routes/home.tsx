@@ -1,6 +1,6 @@
 import { LoaderFunctionArgs, MetaFunction } from 'react-router';
 
-import { SearchRecipe } from '~/components/search-recipe';
+import { Search } from '~/components/search';
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   return {
@@ -26,7 +26,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 export default function Index() {
   return (
     <div className="flex sm:flex-1 sm:justify-center sm:items-center sm:pb-[33vh]">
-      <SearchRecipe />
+      <Search />
     </div>
   );
 }

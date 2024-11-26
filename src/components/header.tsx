@@ -1,12 +1,15 @@
 import { IconMenuDeep } from '@tabler/icons-react';
 import clsx from 'clsx';
 import { useCallback, useMemo, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link, useRouteLoaderData } from 'react-router';
 
 import { useMe } from '~/hooks';
 import { loader } from '~/root';
 
 export const Header = () => {
+  const { t } = useTranslation();
+
   const { recipes } = useMe();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -36,9 +39,10 @@ export const Header = () => {
     <header>
       {foreignVisitor && (
         <div className="bg-[#FBFAFA] border-b border-black/5 text-black/70 py-4 px-6 sm:px-10 text-sm">
-          We&apos;ve noticed you&apos;re visiting from {data!.country.name}{' '}
-          {getCountryFlag(data!.country.code)}. While this website is primarily aimed at a Belgian
-          (Dutch speaking) audience, we&apos;ll do our best to make things work for you! ✌️
+          {t('components.header.foreign-visitor', {
+            country: data!.country.name,
+            flag: getCountryFlag(data!.country.code),
+          })}
         </div>
       )}
 
@@ -63,7 +67,7 @@ export const Header = () => {
                 to="/"
                 onClick={handleItemClick}
                 className="px-4 py-2.5 sm:py-4 flex items-center gap-1.5 cursor-pointer mr-2 sm:mr-0 hover:opacity-80 transition-opacity text-nowrap">
-                Zoeken
+                {t('components.header.search')}
               </Link>
               <Link
                 to="/mijn-recepten"
@@ -71,7 +75,7 @@ export const Header = () => {
                 onClick={handleItemClick}
                 onMouseEnter={handleMouseEnter}>
                 <div className="relative transition-opacity hover:opacity-80 px-4 py-2.5 sm:py-4 flex items-center gap-1.5 cursor-pointer text-nowrap">
-                  Mijn recepten
+                  {t('components.header.my-recipes')}
                   <span
                     className={clsx(
                       'absolute right-0 -top-1 sm:top-1 min-w-4 h-4 p-1 bg-rose-500 rounded-full text-rose-50 flex items-center justify-center text-[10px] font-medium',
@@ -85,7 +89,7 @@ export const Header = () => {
                     <div ref={scrollContainerRef} className="p-2 max-h-[70vh] overflow-y-auto">
                       {recipes.length === 0 ? (
                         <p className="text-xs text-black/60 p-3">
-                          Hier kan je opgezochte recepten terugvinden.
+                          {t('components.header.my-recipes-empty')}
                         </p>
                       ) : (
                         recipes.map((recipe) => (

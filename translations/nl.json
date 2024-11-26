@@ -3,6 +3,15 @@
     "search": {
       "placeholder": "Zoek een receptje",
       "button": "Zoek"
+    },
+    "header": {
+      "search": "Zoeken",
+      "my-recipes": "Mijn recepten",
+      "my-recipes-empty": "Hier zal je opgezochte recepten terugvinden.",
+      "foreign-visitor": "We hebben gemerkt dat je ons bezoekt vanuit {country} {flag}. Deze website is voornamelijk gericht op een Belgisch (Nederlandstalig) publiek, maar we doen ons best om het voor jou te laten werken! ✌️"
+    },
+    "footer": {
+      "copyright": "© {{year}} receptje.be"
     }
   }
 }
