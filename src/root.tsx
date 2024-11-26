@@ -14,15 +14,18 @@ import {
   Scripts,
   ScrollRestoration,
 } from 'react-router';
+import en from 'translations/en.json';
+import nl from 'translations/nl.json';
+
+import { Footer } from '~/components/footer';
+import { Header } from '~/components/header';
 
 import type { Route } from './+types/root';
-import { Footer } from './components/footer';
-import { Header } from './components/header';
 
 i18next.use(initReactI18next).init({
   resources: {
-    en: { translation: await import('translations/en.json') },
-    nl: { translation: await import('translations/nl.json') },
+    en: { translation: en },
+    nl: { translation: nl },
   },
   lng: 'nl',
   fallbackLng: 'en',
