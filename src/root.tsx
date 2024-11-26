@@ -1,6 +1,7 @@
 import './main.css';
 
 import { IconMoodWrrr } from '@tabler/icons-react';
+import countries from 'i18n-iso-countries';
 import { ReactNode } from 'react';
 import {
   isRouteErrorResponse,
@@ -18,9 +19,21 @@ import { Header } from './components/header';
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const locale = request.headers.get('Accept-Language')?.split('-')[0] || 'en';
-  const country = request.headers.get('CF-IPCountry')!;
+  const countryCode = request.headers.get('CF-IPCountry')!;
+  const country = {
+    code: countryCode,
+    name: countries.getName(countryCode, 'en', { select: 'alias' }),
+  };
 
-  return { locale, country };
+  const headers: Record<string, string> = {};
+  request.headers.forEach((value, key) => {
+    headers[key] = value;
+  });
+
+  return {
+    locale,
+    country,
+  };
 };
 
 export const links: Route.LinksFunction = () => [
