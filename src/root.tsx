@@ -12,6 +12,7 @@ import {
 } from 'react-router';
 
 import type { Route } from './+types/root';
+import { Footer } from './components/footer';
 import { Header } from './components/header';
 
 export const links: Route.LinksFunction = () => [
@@ -43,9 +44,7 @@ export function Layout({ children }: { children: ReactNode }) {
       <body>
         <Header />
         <main className="flex flex-1 flex-col px-6 sm:px-10 text-black/80">{children}</main>
-        <footer className="text-black/50 text-sm px-6 sm:px-10 flex items-center gap-1.5">
-          &copy; {new Date().getFullYear()} receptje.be
-        </footer>
+        <Footer />
         <ScrollRestoration />
         <Scripts />
         <script
