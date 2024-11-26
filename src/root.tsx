@@ -5,6 +5,7 @@ import { ReactNode } from 'react';
 import {
   isRouteErrorResponse,
   Links,
+  LoaderFunctionArgs,
   Meta,
   Outlet,
   Scripts,
@@ -14,6 +15,13 @@ import {
 import type { Route } from './+types/root';
 import { Footer } from './components/footer';
 import { Header } from './components/header';
+
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  const locale = request.headers.get('Accept-Language')?.split('-')[0] || 'en';
+  const country = request.headers.get('CF-IPCountry')!;
+
+  return { locale, country };
+};
 
 export const links: Route.LinksFunction = () => [
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
