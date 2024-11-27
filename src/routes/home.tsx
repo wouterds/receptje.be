@@ -1,3 +1,4 @@
+import i18next from 'i18next';
 import { LoaderFunctionArgs, MetaFunction } from 'react-router';
 
 import { Search } from '~/components/search';
@@ -10,15 +11,15 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   return [
-    { title: 'Receptje' },
-    { name: 'description', content: 'Vind je recept in 1 2 3 op Receptje.be!' },
-    { property: 'og:title', content: 'Receptje' },
-    { property: 'og:description', content: 'Vind je recept in 1 2 3 op Receptje.be!' },
+    { title: i18next.t('pages.home.title') },
+    { name: 'description', content: i18next.t('pages.home.description') },
+    { property: 'og:title', content: i18next.t('pages.home.title') },
+    { property: 'og:description', content: i18next.t('pages.home.description') },
     { property: 'og:type', content: 'website' },
     { property: 'og:image', content: new URL('/og.png', data?.url).toString() },
     { name: 'twitter:card', content: 'summary_large_image' },
-    { name: 'twitter:title', content: 'Receptje' },
-    { name: 'twitter:description', content: 'Vind je recept in 1 2 3 op Receptje.be!' },
+    { name: 'twitter:title', content: i18next.t('pages.home.title') },
+    { name: 'twitter:description', content: i18next.t('pages.home.description') },
     { name: 'twitter:image', content: new URL('/og.png', data?.url).toString() },
   ];
 };

@@ -1,4 +1,5 @@
 import { IconClock, IconShare, IconUsers } from '@tabler/icons-react';
+import i18next from 'i18next';
 import { Trans, useTranslation } from 'react-i18next';
 import { data, LoaderFunctionArgs, MetaFunction, redirect } from 'react-router';
 import { useLoaderData } from 'react-router';
@@ -9,7 +10,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   const identifier = params.slug?.split('-')?.pop();
   const recipe = await Recipes.getById(identifier);
   if (!recipe) {
-    throw new Response('Recept niet gevonden', { status: 404 });
+    throw new Response(i18next.t('errors.recipe-not-found'), { status: 404 });
   }
 
   const slug = `${recipe.identifier}-${recipe.id}`;
@@ -22,7 +23,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   if (!data?.recipe) {
-    return [{ title: 'Recept niet gevonden - Receptje' }];
+    return [{ title: i18next.t('errors.recipe-not-found') }];
   }
 
   return [

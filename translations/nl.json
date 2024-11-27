@@ -32,9 +32,16 @@
     }
   },
   "pages": {
+    "home": {
+      "title": "Receptje",
+      "description": "Vind je recept in 1 2 3 op Receptje.be!"
+    },
     "my-recipes": {
       "title": "Mijn recepten",
       "empty": "Je hebt precies nog geen recepten opgezocht."
     }
+  },
+  "errors": {
+    "recipe-not-found": "Recept niet gevonden"
   }
 }
