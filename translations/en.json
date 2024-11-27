@@ -2,7 +2,15 @@
   "components": {
     "search": {
       "placeholder": "Search for a recipe",
-      "button": "Search"
+      "button": "Search",
+      "suggestions": [
+        "Flatbread (greek yogurt) for 2",
+        "Moscow Mule",
+        "Ragù",
+        "Swedish kladdkaka",
+        "Pancakes 1 egg",
+        "Vegi lasagne with feta 4 people"
+      ]
     },
     "header": {
       "search": "Search",

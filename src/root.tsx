@@ -3,7 +3,7 @@ import './main.css';
 import { IconMoodWrrr } from '@tabler/icons-react';
 import countries from 'i18n-iso-countries';
 import i18next, { Resource } from 'i18next';
-import { ReactNode, useEffect } from 'react';
+import { ReactNode } from 'react';
 import { initReactI18next } from 'react-i18next';
 import {
   isRouteErrorResponse,

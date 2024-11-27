@@ -2,7 +2,15 @@
   "components": {
     "search": {
       "placeholder": "Zoek een receptje",
-      "button": "Zoek"
+      "button": "Zoek",
+      "suggestions": [
+        "Flatbread (griekse yoghurt) voor 2",
+        "Moscow Mule",
+        "Ragù",
+        "Zweedse kladdkaka",
+        "Pannekoeken 1 ei",
+        "Vegi lasagne met feta 4 personen"
+      ]
     },
     "header": {
       "search": "Zoeken",

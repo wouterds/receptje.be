@@ -1,24 +1,27 @@
 import clsx from 'clsx';
-import { useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFetcher } from 'react-router';
 
 import { useUser } from '~/hooks';
 import { action } from '~/routes/search';
 
-const SUGGESTIONS = [
-  'Flatbread (griekse yoghurt) voor 2',
-  'Moscow Mule',
-  'Ragù',
-  'Zweedse kladdkaka',
-  'Pannekoeken 1 ei',
-  'Vegi lasagne met feta 4 personen',
-];
-
 export const Search = () => {
   useUser();
 
   const { t } = useTranslation();
+
+  const suggestions = useMemo(
+    () => [
+      t('components.search.suggestions.0'),
+      t('components.search.suggestions.1'),
+      t('components.search.suggestions.2'),
+      t('components.search.suggestions.3'),
+      t('components.search.suggestions.4'),
+      t('components.search.suggestions.5'),
+    ],
+    [t],
+  );
 
   const [query, setQuery] = useState('');
   const fetcher = useFetcher<typeof action>();
@@ -106,7 +109,7 @@ export const Search = () => {
           'opacity-0': isSuggestionClicked,
           'opacity-100': !isSuggestionClicked,
         })}>
-        {SUGGESTIONS.map((suggestion) => (
+        {suggestions.map((suggestion) => (
           <li key={suggestion}>
             <button
               type="button"
