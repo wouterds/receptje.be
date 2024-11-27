@@ -1,4 +1,13 @@
 {
+  "labels": {
+    "share": "Delen",
+    "portions": "{{count}} porties",
+    "portions_one": "1 portie",
+    "minutes": "{{count}} minuten",
+    "minutes_one": "1 minuut",
+    "ingredients": "Ingrediënten",
+    "preparation": "Bereiding"
+  },
   "components": {
     "search": {
       "placeholder": "Zoek een receptje",

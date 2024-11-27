@@ -1,4 +1,13 @@
 {
+  "labels": {
+    "share": "Share",
+    "portions": "<0>{{count}}</0> portions",
+    "portions_one": "<0>1</0> portion",
+    "minutes": "<0>{{count}}</0> minutes",
+    "minutes_one": "<0>1</0> minute",
+    "ingredients": "Ingredients",
+    "preparation": "Preparation"
+  },
   "components": {
     "search": {
       "placeholder": "Search for a recipe",

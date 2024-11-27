@@ -1,4 +1,5 @@
 import { IconClock, IconShare, IconUsers } from '@tabler/icons-react';
+import { Trans, useTranslation } from 'react-i18next';
 import { data, LoaderFunctionArgs, MetaFunction, redirect } from 'react-router';
 import { useLoaderData } from 'react-router';
 
@@ -41,22 +42,18 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 
 export default function RecipeDetail() {
   const { recipe, url } = useLoaderData<typeof loader>();
+  const { t } = useTranslation();
 
   return (
-    <div className="max-w-xl sm:my-6 mx-auto bg-white/50 border border-black/5 rounded-lg p-6 sm:p-8 relative group">
+    <div className="max-w-xl w-full sm:my-6 mx-auto bg-white/50 border border-black/5 rounded-lg p-6 sm:p-8 relative group">
       <div className="flex justify-between items-start mb-2">
         <h1 className="text-xl font-semibold">{recipe.name}</h1>
         {typeof window !== 'undefined' && typeof navigator?.share === 'function' && (
           <button
-            onClick={() =>
-              navigator.share({
-                title: recipe.name,
-                url: url,
-              })
-            }
+            onClick={() => navigator.share({ title: recipe.name, url })}
             className="text-black/70 rounded transition-all px-2.5 py-1.5 -my-0.5 bg-tint hover:bg-tint-dark text-sm items-center gap-1.5 invisible group-hover:visible opacity-0 group-hover:opacity-100 focus:visible focus:opacity-100 hidden sm:inline-flex">
             <IconShare className="w-4 h-4" />
-            Delen
+            {t('labels.share')}
           </button>
         )}
       </div>
@@ -65,20 +62,27 @@ export default function RecipeDetail() {
         <p className="flex items-center gap-2">
           <IconUsers className="text-rose-500 h-5 w-5" />
           <span>
-            <span className="font-medium">{recipe.portions}</span>{' '}
-            {recipe.portions === 1 ? 'portie' : 'porties'}
+            <Trans
+              i18nKey="labels.portions"
+              count={recipe.portions}
+              components={[<span className="font-medium" key="count" />]}
+            />
           </span>
         </p>
         <p className="flex items-center gap-2">
           <IconClock className="text-rose-500 h-5 w-5" />
           <span>
-            <span className="font-medium">{recipe.preparationTime}</span> minuten
+            <Trans
+              i18nKey="labels.minutes"
+              count={recipe.preparationTime}
+              components={[<span className="font-medium" key="count" />]}
+            />
           </span>
         </p>
       </div>
 
       <div className="mb-6">
-        <h2 className="font-semibold text-lg mb-2">Ingrediënten</h2>
+        <h2 className="font-semibold text-lg mb-2">{t('labels.ingredients')}</h2>
         <ul className="space-y-2 list-disc list-inside">
           {recipe.ingredients.map((ingredient, index) => (
             <li key={index} className="marker:text-rose-500">
@@ -92,7 +96,7 @@ export default function RecipeDetail() {
       </div>
 
       <div>
-        <h2 className="font-bold text-lg mb-2">Bereiding</h2>
+        <h2 className="font-bold text-lg mb-2">{t('labels.preparation')}</h2>
         <ol className="space-y-3">
           {recipe.steps.map((step, index) => (
             <li key={index} className="flex gap-3">
