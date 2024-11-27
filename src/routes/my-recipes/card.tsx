@@ -1,6 +1,7 @@
 import { IconClock, IconTrashX, IconUsers } from '@tabler/icons-react';
 import clsx from 'clsx';
 import { MouseEvent, useState } from 'react';
+import { Trans } from 'react-i18next';
 import { Link, useRevalidator } from 'react-router';
 
 import { Recipe } from '~/database';
@@ -78,11 +79,19 @@ export const Card = ({ recipe }: Props) => {
       <div className="flex gap-4 mt-1 text-sm text-black/60">
         <span className="flex items-center gap-1">
           <IconUsers className="text-rose-500 h-4 w-4" />
-          <span className="font-medium">{recipe.portions}</span> porties
+          <Trans
+            i18nKey="labels.portions"
+            count={recipe.portions}
+            components={[<span className="font-medium" key="count" />]}
+          />
         </span>
         <span className="flex items-center gap-1">
           <IconClock className="text-rose-500 h-4 w-4" />
-          <span className="font-medium">{recipe.preparationTime}</span> minuten
+          <Trans
+            i18nKey="labels.minutes"
+            count={recipe.preparationTime}
+            components={[<span className="font-medium" key="count" />]}
+          />
         </span>
       </div>
     </Link>

@@ -30,5 +30,11 @@
     "footer": {
       "copyright": "© {{year}} receptje.be"
     }
+  },
+  "pages": {
+    "my-recipes": {
+      "title": "Mijn recepten",
+      "empty": "Je hebt precies nog geen recepten opgezocht."
+    }
   }
 }
