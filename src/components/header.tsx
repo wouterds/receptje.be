@@ -32,7 +32,7 @@ export const Header = () => {
       return false;
     }
 
-    return !['BE', 'NL'].includes(data.country.code) && data.locale !== 'nl';
+    return !['BE', 'NL'].includes(data.country.code) && data.locale.toLowerCase() !== 'nl';
   }, [data]);
 
   return (

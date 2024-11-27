@@ -2,8 +2,8 @@ import './main.css';
 
 import { IconMoodWrrr } from '@tabler/icons-react';
 import countries from 'i18n-iso-countries';
-import i18next from 'i18next';
-import { ReactNode } from 'react';
+import i18next, { Resource } from 'i18next';
+import { ReactNode, useEffect } from 'react';
 import { initReactI18next } from 'react-i18next';
 import {
   isRouteErrorResponse,
@@ -13,23 +13,18 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
 } from 'react-router';
 import en from 'translations/en.json';
-import nl from 'translations/nl.json';
 
 import { Footer } from '~/components/footer';
 import { Header } from '~/components/header';
 
 import type { Route } from './+types/root';
 
-i18next.use(initReactI18next).init({
-  resources: {
-    en: { translation: en },
-    nl: { translation: nl },
-  },
-  lng: 'nl',
-  fallbackLng: 'en',
-});
+const resources: Resource = {
+  en: { translation: en },
+};
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const locale = request.headers.get('Accept-Language')?.split('-')[0] || 'en';
@@ -44,13 +39,20 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     headers[key] = value;
   });
 
-  if (!['NL', 'BE'].includes(countryCode) && locale !== 'nl') {
-    await i18next.changeLanguage('en');
+  let lng = 'en';
+  if (['BE', 'NL'].includes(countryCode) || locale.toLowerCase() === 'nl') {
+    lng = 'nl';
+    resources.nl = { translation: await import('translations/nl.json') };
   }
+
+  // server
+  i18next.use(initReactI18next).init({ resources, lng, fallbackLng: 'en' });
 
   return {
     locale,
     country,
+    resources,
+    lng,
   };
 };
 
@@ -68,6 +70,11 @@ export const links: Route.LinksFunction = () => [
 ];
 
 export function Layout({ children }: { children: ReactNode }) {
+  const { resources, lng } = useLoaderData<typeof loader>();
+
+  // client
+  i18next.use(initReactI18next).init({ resources, lng, fallbackLng: 'en' });
+
   return (
     <html lang="en">
       <head>

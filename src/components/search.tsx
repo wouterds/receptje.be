@@ -1,5 +1,4 @@
 import clsx from 'clsx';
-import i18next from 'i18next';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFetcher } from 'react-router';
