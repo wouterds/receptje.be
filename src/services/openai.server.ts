@@ -1,3 +1,4 @@
+import i18next from 'i18next';
 import OpenAILib from 'openai';
 
 import { AICompletions, Recipes } from '~/database';
@@ -11,13 +12,15 @@ export class OpenAI {
       return null;
     }
 
+    const language = i18next.language;
+
     const completion = await openai.chat.completions.create({
       model: 'gpt-4o-mini',
       messages: [
         {
           role: 'system',
           content: `
-- You are an expert chef who writes recipes in a simple European style in (Belgian) Dutch / Flemish.
+- You are an expert chef who writes recipes in a simple European style in the following language (ISO 639-1 code): ${language}.
 - Always use consistent units, write them in full & lowercase.
 - If there is no unit, leave it empty.
 - If the unit is the same as the ingredient, leave it empty.
@@ -25,16 +28,17 @@ export class OpenAI {
 - You ONLY respond with recipes in JSON format.
 - If the question is NOT about food, ingredients or a real recipe, respond with null.
 - You must never deviate from the requested JSON format or null as a response.
+- Exclude the word "recipe" & "dish" from the name & slug.
           `,
         },
         {
           role: 'user',
           content: `Give me a recipe for: ${prompt}. Return only JSON (without backticks) in the following format:
           {
-            "identifier": "simplified-dutch-slug",
-            "keywords": ["keyword-in-dutch", "..."],
-            "name": "Name of the dish (without "dish" or "recipe")",
-            "description": "Short & clear description of the dish. Don't overdo adjectives, stick to the essence. (120 - 160 characters).",
+            "identifier": "simplified-slug-in-${language}",
+            "keywords": ["keyword-in-${language}", "..."],
+            "name": "Name of the dish",
+            "description": "Short & clear description of the dish. Avoid as much as possible adjectives, stick to the basics. (120 - 160 characters).",
             "portions": "Number of portions (number)",
             "preparationTime": "Preparation time in minutes (number)",
             "ingredients": [

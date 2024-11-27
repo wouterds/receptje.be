@@ -7,10 +7,7 @@ import { useUser } from '~/hooks';
 import { action } from '~/routes/search';
 
 export const Search = () => {
-  useUser();
-
   const { t } = useTranslation();
-
   const suggestions = useMemo(
     () => [
       t('components.search.suggestions.0'),
@@ -22,6 +19,8 @@ export const Search = () => {
     ],
     [t],
   );
+
+  useUser();
 
   const [query, setQuery] = useState('');
   const fetcher = useFetcher<typeof action>();

@@ -28,7 +28,7 @@ const resources: Resource = {
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const locale = request.headers.get('Accept-Language')?.split('-')[0] || 'en';
-  const countryCode = request.headers.get('CF-IPCountry')!;
+  const countryCode = request.headers.get('CF-IPCountry')! || 'BE';
   const country = {
     code: countryCode,
     name: countries.getName(countryCode, 'en', { select: 'alias' }),
